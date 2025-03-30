@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	// Assuming gen.go is moved to an 'api' subdirectory
 	"github.com/gameplan-backend/api"
 
 	"github.com/labstack/echo/v4"
