@@ -4,11 +4,14 @@
 package api
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/oapi-codegen/runtime"
+	strictecho "github.com/oapi-codegen/runtime/strictmiddleware/echo"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
@@ -1143,4 +1146,2046 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.GET(baseURL+"/users/:userId/usersettings", wrapper.GetUsersUserIdUsersettings)
 	router.POST(baseURL+"/users/:userId/usersettings", wrapper.PostUsersUserIdUsersettings)
 
+}
+
+type PostMatchesRequestObject struct {
+	Body *PostMatchesJSONRequestBody
+}
+
+type PostMatchesResponseObject interface {
+	VisitPostMatchesResponse(w http.ResponseWriter) error
+}
+
+type PostMatches200JSONResponse ApiResult
+
+func (response PostMatches200JSONResponse) VisitPostMatchesResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PutMatchesBatchesRequestObject struct {
+	Body *PutMatchesBatchesJSONRequestBody
+}
+
+type PutMatchesBatchesResponseObject interface {
+	VisitPutMatchesBatchesResponse(w http.ResponseWriter) error
+}
+
+type PutMatchesBatches200JSONResponse ApiResult
+
+func (response PutMatchesBatches200JSONResponse) VisitPutMatchesBatchesResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostMatchesUnassignPlayerFromMatchRequestObject struct {
+	Body *PostMatchesUnassignPlayerFromMatchJSONRequestBody
+}
+
+type PostMatchesUnassignPlayerFromMatchResponseObject interface {
+	VisitPostMatchesUnassignPlayerFromMatchResponse(w http.ResponseWriter) error
+}
+
+type PostMatchesUnassignPlayerFromMatch200JSONResponse ApiResult
+
+func (response PostMatchesUnassignPlayerFromMatch200JSONResponse) VisitPostMatchesUnassignPlayerFromMatchResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeleteMatchesMatchIdRequestObject struct {
+	MatchId int `json:"matchId"`
+}
+
+type DeleteMatchesMatchIdResponseObject interface {
+	VisitDeleteMatchesMatchIdResponse(w http.ResponseWriter) error
+}
+
+type DeleteMatchesMatchId200JSONResponse ApiResult
+
+func (response DeleteMatchesMatchId200JSONResponse) VisitDeleteMatchesMatchIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PutMatchesMatchIdRequestObject struct {
+	MatchId int `json:"matchId"`
+	Body    *PutMatchesMatchIdJSONRequestBody
+}
+
+type PutMatchesMatchIdResponseObject interface {
+	VisitPutMatchesMatchIdResponse(w http.ResponseWriter) error
+}
+
+type PutMatchesMatchId200JSONResponse ApiResult
+
+func (response PutMatchesMatchId200JSONResponse) VisitPutMatchesMatchIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetPlayersRequestObject struct {
+	Params GetPlayersParams
+}
+
+type GetPlayersResponseObject interface {
+	VisitGetPlayersResponse(w http.ResponseWriter) error
+}
+
+type GetPlayers200JSONResponse ApiResult
+
+func (response GetPlayers200JSONResponse) VisitGetPlayersResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostPlayersRequestObject struct {
+	Body *PostPlayersJSONRequestBody
+}
+
+type PostPlayersResponseObject interface {
+	VisitPostPlayersResponse(w http.ResponseWriter) error
+}
+
+type PostPlayers200JSONResponse ApiResult
+
+func (response PostPlayers200JSONResponse) VisitPostPlayersResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeletePlayersPlayerIdRequestObject struct {
+	PlayerId int `json:"playerId"`
+}
+
+type DeletePlayersPlayerIdResponseObject interface {
+	VisitDeletePlayersPlayerIdResponse(w http.ResponseWriter) error
+}
+
+type DeletePlayersPlayerId200JSONResponse ApiResult
+
+func (response DeletePlayersPlayerId200JSONResponse) VisitDeletePlayersPlayerIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetPlayersPlayerIdRequestObject struct {
+	PlayerId int `json:"playerId"`
+}
+
+type GetPlayersPlayerIdResponseObject interface {
+	VisitGetPlayersPlayerIdResponse(w http.ResponseWriter) error
+}
+
+type GetPlayersPlayerId200JSONResponse ApiResult
+
+func (response GetPlayersPlayerId200JSONResponse) VisitGetPlayersPlayerIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PutPlayersPlayerIdRequestObject struct {
+	PlayerId int `json:"playerId"`
+	Body     *PutPlayersPlayerIdJSONRequestBody
+}
+
+type PutPlayersPlayerIdResponseObject interface {
+	VisitPutPlayersPlayerIdResponse(w http.ResponseWriter) error
+}
+
+type PutPlayersPlayerId200JSONResponse ApiResult
+
+func (response PutPlayersPlayerId200JSONResponse) VisitPutPlayersPlayerIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetPlayersPlayerIdCustomColumnsRequestObject struct {
+	PlayerId int `json:"playerId"`
+}
+
+type GetPlayersPlayerIdCustomColumnsResponseObject interface {
+	VisitGetPlayersPlayerIdCustomColumnsResponse(w http.ResponseWriter) error
+}
+
+type GetPlayersPlayerIdCustomColumns200JSONResponse ApiResult
+
+func (response GetPlayersPlayerIdCustomColumns200JSONResponse) VisitGetPlayersPlayerIdCustomColumnsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PutPlayersPlayerIdCustomColumnsRequestObject struct {
+	PlayerId int `json:"playerId"`
+	Body     *PutPlayersPlayerIdCustomColumnsJSONRequestBody
+}
+
+type PutPlayersPlayerIdCustomColumnsResponseObject interface {
+	VisitPutPlayersPlayerIdCustomColumnsResponse(w http.ResponseWriter) error
+}
+
+type PutPlayersPlayerIdCustomColumns200JSONResponse ApiResult
+
+func (response PutPlayersPlayerIdCustomColumns200JSONResponse) VisitPutPlayersPlayerIdCustomColumnsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetPlayersPlayerIdScheduleRequestObject struct {
+	PlayerId int `json:"playerId"`
+}
+
+type GetPlayersPlayerIdScheduleResponseObject interface {
+	VisitGetPlayersPlayerIdScheduleResponse(w http.ResponseWriter) error
+}
+
+type GetPlayersPlayerIdSchedule200JSONResponse ApiResult
+
+func (response GetPlayersPlayerIdSchedule200JSONResponse) VisitGetPlayersPlayerIdScheduleResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetSeasonsRequestObject struct {
+}
+
+type GetSeasonsResponseObject interface {
+	VisitGetSeasonsResponse(w http.ResponseWriter) error
+}
+
+type GetSeasons200JSONResponse ApiResult
+
+func (response GetSeasons200JSONResponse) VisitGetSeasonsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostSeasonsRequestObject struct {
+	Body *PostSeasonsJSONRequestBody
+}
+
+type PostSeasonsResponseObject interface {
+	VisitPostSeasonsResponse(w http.ResponseWriter) error
+}
+
+type PostSeasons200JSONResponse ApiResult
+
+func (response PostSeasons200JSONResponse) VisitPostSeasonsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetSeasonsTotalAmountRequestObject struct {
+}
+
+type GetSeasonsTotalAmountResponseObject interface {
+	VisitGetSeasonsTotalAmountResponse(w http.ResponseWriter) error
+}
+
+type GetSeasonsTotalAmount200JSONResponse ApiResult
+
+func (response GetSeasonsTotalAmount200JSONResponse) VisitGetSeasonsTotalAmountResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeleteSeasonsSeasonIdRequestObject struct {
+	SeasonId int `json:"seasonId"`
+}
+
+type DeleteSeasonsSeasonIdResponseObject interface {
+	VisitDeleteSeasonsSeasonIdResponse(w http.ResponseWriter) error
+}
+
+type DeleteSeasonsSeasonId200JSONResponse ApiResult
+
+func (response DeleteSeasonsSeasonId200JSONResponse) VisitDeleteSeasonsSeasonIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetSeasonsSeasonIdRequestObject struct {
+	SeasonId int `json:"seasonId"`
+	Body     *GetSeasonsSeasonIdJSONRequestBody
+}
+
+type GetSeasonsSeasonIdResponseObject interface {
+	VisitGetSeasonsSeasonIdResponse(w http.ResponseWriter) error
+}
+
+type GetSeasonsSeasonId200JSONResponse ApiResult
+
+func (response GetSeasonsSeasonId200JSONResponse) VisitGetSeasonsSeasonIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PutSeasonsSeasonIdRequestObject struct {
+	SeasonId int `json:"seasonId"`
+	Body     *PutSeasonsSeasonIdJSONRequestBody
+}
+
+type PutSeasonsSeasonIdResponseObject interface {
+	VisitPutSeasonsSeasonIdResponse(w http.ResponseWriter) error
+}
+
+type PutSeasonsSeasonId200JSONResponse ApiResult
+
+func (response PutSeasonsSeasonId200JSONResponse) VisitPutSeasonsSeasonIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetSeasonsSeasonIdPublicScheduleLinkRequestObject struct {
+	SeasonId int `json:"seasonId"`
+}
+
+type GetSeasonsSeasonIdPublicScheduleLinkResponseObject interface {
+	VisitGetSeasonsSeasonIdPublicScheduleLinkResponse(w http.ResponseWriter) error
+}
+
+type GetSeasonsSeasonIdPublicScheduleLink200JSONResponse ApiResult
+
+func (response GetSeasonsSeasonIdPublicScheduleLink200JSONResponse) VisitGetSeasonsSeasonIdPublicScheduleLinkResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetSeasonsSeasonIdScoreboardRequestObject struct {
+	SeasonId int `json:"seasonId"`
+}
+
+type GetSeasonsSeasonIdScoreboardResponseObject interface {
+	VisitGetSeasonsSeasonIdScoreboardResponse(w http.ResponseWriter) error
+}
+
+type GetSeasonsSeasonIdScoreboard200JSONResponse ApiResult
+
+func (response GetSeasonsSeasonIdScoreboard200JSONResponse) VisitGetSeasonsSeasonIdScoreboardResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetSeasonsSeasonIdUpcomingRequestObject struct {
+	SeasonId int `json:"seasonId"`
+}
+
+type GetSeasonsSeasonIdUpcomingResponseObject interface {
+	VisitGetSeasonsSeasonIdUpcomingResponse(w http.ResponseWriter) error
+}
+
+type GetSeasonsSeasonIdUpcoming200JSONResponse ApiResult
+
+func (response GetSeasonsSeasonIdUpcoming200JSONResponse) VisitGetSeasonsSeasonIdUpcomingResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostSessionsRequestObject struct {
+	Body *PostSessionsJSONRequestBody
+}
+
+type PostSessionsResponseObject interface {
+	VisitPostSessionsResponse(w http.ResponseWriter) error
+}
+
+type PostSessions200JSONResponse ApiResult
+
+func (response PostSessions200JSONResponse) VisitPostSessionsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostSubscriptionsHandleSuccessUpgradeRequestObject struct {
+}
+
+type PostSubscriptionsHandleSuccessUpgradeResponseObject interface {
+	VisitPostSubscriptionsHandleSuccessUpgradeResponse(w http.ResponseWriter) error
+}
+
+type PostSubscriptionsHandleSuccessUpgrade200JSONResponse ApiResult
+
+func (response PostSubscriptionsHandleSuccessUpgrade200JSONResponse) VisitPostSubscriptionsHandleSuccessUpgradeResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostSubscriptionsInitUpdatePaymentMethodRequestObject struct {
+}
+
+type PostSubscriptionsInitUpdatePaymentMethodResponseObject interface {
+	VisitPostSubscriptionsInitUpdatePaymentMethodResponse(w http.ResponseWriter) error
+}
+
+type PostSubscriptionsInitUpdatePaymentMethod200JSONResponse ApiResult
+
+func (response PostSubscriptionsInitUpdatePaymentMethod200JSONResponse) VisitPostSubscriptionsInitUpdatePaymentMethodResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostSubscriptionsUpgradeUserSubscriptionRequestObject struct {
+}
+
+type PostSubscriptionsUpgradeUserSubscriptionResponseObject interface {
+	VisitPostSubscriptionsUpgradeUserSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type PostSubscriptionsUpgradeUserSubscription200JSONResponse ApiResult
+
+func (response PostSubscriptionsUpgradeUserSubscription200JSONResponse) VisitPostSubscriptionsUpgradeUserSubscriptionResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostSupportMessagesRequestObject struct {
+	Body *PostSupportMessagesJSONRequestBody
+}
+
+type PostSupportMessagesResponseObject interface {
+	VisitPostSupportMessagesResponse(w http.ResponseWriter) error
+}
+
+type PostSupportMessages200JSONResponse ApiResult
+
+func (response PostSupportMessages200JSONResponse) VisitPostSupportMessagesResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUsersSendResetPasswordLinkRequestObject struct {
+	Body *PostUsersSendResetPasswordLinkJSONRequestBody
+}
+
+type PostUsersSendResetPasswordLinkResponseObject interface {
+	VisitPostUsersSendResetPasswordLinkResponse(w http.ResponseWriter) error
+}
+
+type PostUsersSendResetPasswordLink200JSONResponse ApiResult
+
+func (response PostUsersSendResetPasswordLink200JSONResponse) VisitPostUsersSendResetPasswordLinkResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUsersSendVerificationEmailRequestObject struct {
+}
+
+type PostUsersSendVerificationEmailResponseObject interface {
+	VisitPostUsersSendVerificationEmailResponse(w http.ResponseWriter) error
+}
+
+type PostUsersSendVerificationEmail200JSONResponse ApiResult
+
+func (response PostUsersSendVerificationEmail200JSONResponse) VisitPostUsersSendVerificationEmailResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUsersSignUpUserRequestObject struct {
+	Body *PostUsersSignUpUserJSONRequestBody
+}
+
+type PostUsersSignUpUserResponseObject interface {
+	VisitPostUsersSignUpUserResponse(w http.ResponseWriter) error
+}
+
+type PostUsersSignUpUser200JSONResponse ApiResult
+
+func (response PostUsersSignUpUser200JSONResponse) VisitPostUsersSignUpUserResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUsersUpdateUserPasswordRequestObject struct {
+	Body *PostUsersUpdateUserPasswordJSONRequestBody
+}
+
+type PostUsersUpdateUserPasswordResponseObject interface {
+	VisitPostUsersUpdateUserPasswordResponse(w http.ResponseWriter) error
+}
+
+type PostUsersUpdateUserPassword200JSONResponse ApiResult
+
+func (response PostUsersUpdateUserPassword200JSONResponse) VisitPostUsersUpdateUserPasswordResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUsersVerifyMagicLinkTokenRequestObject struct {
+	Body *PostUsersVerifyMagicLinkTokenJSONRequestBody
+}
+
+type PostUsersVerifyMagicLinkTokenResponseObject interface {
+	VisitPostUsersVerifyMagicLinkTokenResponse(w http.ResponseWriter) error
+}
+
+type PostUsersVerifyMagicLinkToken200JSONResponse ApiResult
+
+func (response PostUsersVerifyMagicLinkToken200JSONResponse) VisitPostUsersVerifyMagicLinkTokenResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeleteUsersUserIdRequestObject struct {
+	UserId int `json:"userId"`
+}
+
+type DeleteUsersUserIdResponseObject interface {
+	VisitDeleteUsersUserIdResponse(w http.ResponseWriter) error
+}
+
+type DeleteUsersUserId200JSONResponse ApiResult
+
+func (response DeleteUsersUserId200JSONResponse) VisitDeleteUsersUserIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersUserIdAppsettingsRequestObject struct {
+	UserId int `json:"userId"`
+}
+
+type GetUsersUserIdAppsettingsResponseObject interface {
+	VisitGetUsersUserIdAppsettingsResponse(w http.ResponseWriter) error
+}
+
+type GetUsersUserIdAppsettings200JSONResponse ApiResult
+
+func (response GetUsersUserIdAppsettings200JSONResponse) VisitGetUsersUserIdAppsettingsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUsersUserIdAppsettingsRequestObject struct {
+	UserId int `json:"userId"`
+	Body   *PostUsersUserIdAppsettingsJSONRequestBody
+}
+
+type PostUsersUserIdAppsettingsResponseObject interface {
+	VisitPostUsersUserIdAppsettingsResponse(w http.ResponseWriter) error
+}
+
+type PostUsersUserIdAppsettings200JSONResponse ApiResult
+
+func (response PostUsersUserIdAppsettings200JSONResponse) VisitPostUsersUserIdAppsettingsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersUserIdCustomPlayerColumnsRequestObject struct {
+	UserId int `json:"userId"`
+}
+
+type GetUsersUserIdCustomPlayerColumnsResponseObject interface {
+	VisitGetUsersUserIdCustomPlayerColumnsResponse(w http.ResponseWriter) error
+}
+
+type GetUsersUserIdCustomPlayerColumns200JSONResponse ApiResult
+
+func (response GetUsersUserIdCustomPlayerColumns200JSONResponse) VisitGetUsersUserIdCustomPlayerColumnsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUsersUserIdCustomPlayerColumnsRequestObject struct {
+	UserId int `json:"userId"`
+	Body   *PostUsersUserIdCustomPlayerColumnsJSONRequestBody
+}
+
+type PostUsersUserIdCustomPlayerColumnsResponseObject interface {
+	VisitPostUsersUserIdCustomPlayerColumnsResponse(w http.ResponseWriter) error
+}
+
+type PostUsersUserIdCustomPlayerColumns200JSONResponse ApiResult
+
+func (response PostUsersUserIdCustomPlayerColumns200JSONResponse) VisitPostUsersUserIdCustomPlayerColumnsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeleteUsersUserIdCustomPlayerColumnsColumnIdRequestObject struct {
+	UserId   int `json:"userId"`
+	ColumnId int `json:"columnId"`
+}
+
+type DeleteUsersUserIdCustomPlayerColumnsColumnIdResponseObject interface {
+	VisitDeleteUsersUserIdCustomPlayerColumnsColumnIdResponse(w http.ResponseWriter) error
+}
+
+type DeleteUsersUserIdCustomPlayerColumnsColumnId200JSONResponse ApiResult
+
+func (response DeleteUsersUserIdCustomPlayerColumnsColumnId200JSONResponse) VisitDeleteUsersUserIdCustomPlayerColumnsColumnIdResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUsersUserIdResetCurrentUserPasswordRequestObject struct {
+	UserId int `json:"userId"`
+	Body   *PostUsersUserIdResetCurrentUserPasswordJSONRequestBody
+}
+
+type PostUsersUserIdResetCurrentUserPasswordResponseObject interface {
+	VisitPostUsersUserIdResetCurrentUserPasswordResponse(w http.ResponseWriter) error
+}
+
+type PostUsersUserIdResetCurrentUserPassword200JSONResponse ApiResult
+
+func (response PostUsersUserIdResetCurrentUserPassword200JSONResponse) VisitPostUsersUserIdResetCurrentUserPasswordResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeleteUsersUserIdSubscriptionRequestObject struct {
+	UserId int `json:"userId"`
+}
+
+type DeleteUsersUserIdSubscriptionResponseObject interface {
+	VisitDeleteUsersUserIdSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type DeleteUsersUserIdSubscription200JSONResponse ApiResult
+
+func (response DeleteUsersUserIdSubscription200JSONResponse) VisitDeleteUsersUserIdSubscriptionResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersUserIdSubscriptionRequestObject struct {
+	UserId int `json:"userId"`
+}
+
+type GetUsersUserIdSubscriptionResponseObject interface {
+	VisitGetUsersUserIdSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type GetUsersUserIdSubscription200JSONResponse ApiResult
+
+func (response GetUsersUserIdSubscription200JSONResponse) VisitGetUsersUserIdSubscriptionResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersUserIdUsersettingsRequestObject struct {
+	UserId int `json:"userId"`
+}
+
+type GetUsersUserIdUsersettingsResponseObject interface {
+	VisitGetUsersUserIdUsersettingsResponse(w http.ResponseWriter) error
+}
+
+type GetUsersUserIdUsersettings200JSONResponse ApiResult
+
+func (response GetUsersUserIdUsersettings200JSONResponse) VisitGetUsersUserIdUsersettingsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUsersUserIdUsersettingsRequestObject struct {
+	UserId int `json:"userId"`
+	Body   *PostUsersUserIdUsersettingsJSONRequestBody
+}
+
+type PostUsersUserIdUsersettingsResponseObject interface {
+	VisitPostUsersUserIdUsersettingsResponse(w http.ResponseWriter) error
+}
+
+type PostUsersUserIdUsersettings200JSONResponse ApiResult
+
+func (response PostUsersUserIdUsersettings200JSONResponse) VisitPostUsersUserIdUsersettingsResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+// StrictServerInterface represents all server handlers.
+type StrictServerInterface interface {
+	// Add a new match
+	// (POST /matches)
+	PostMatches(ctx context.Context, request PostMatchesRequestObject) (PostMatchesResponseObject, error)
+	// Update multiple matches at the same time
+	// (PUT /matches/batches)
+	PutMatchesBatches(ctx context.Context, request PutMatchesBatchesRequestObject) (PutMatchesBatchesResponseObject, error)
+	// Unassign a player from a match
+	// (POST /matches/unassignPlayerFromMatch)
+	PostMatchesUnassignPlayerFromMatch(ctx context.Context, request PostMatchesUnassignPlayerFromMatchRequestObject) (PostMatchesUnassignPlayerFromMatchResponseObject, error)
+	// Delete a match
+	// (DELETE /matches/{matchId})
+	DeleteMatchesMatchId(ctx context.Context, request DeleteMatchesMatchIdRequestObject) (DeleteMatchesMatchIdResponseObject, error)
+	// Save match data
+	// (PUT /matches/{matchId})
+	PutMatchesMatchId(ctx context.Context, request PutMatchesMatchIdRequestObject) (PutMatchesMatchIdResponseObject, error)
+	// Get a list of players
+	// (GET /players)
+	GetPlayers(ctx context.Context, request GetPlayersRequestObject) (GetPlayersResponseObject, error)
+	// Create a pool player
+	// (POST /players)
+	PostPlayers(ctx context.Context, request PostPlayersRequestObject) (PostPlayersResponseObject, error)
+	// Delete a player
+	// (DELETE /players/{playerId})
+	DeletePlayersPlayerId(ctx context.Context, request DeletePlayersPlayerIdRequestObject) (DeletePlayersPlayerIdResponseObject, error)
+	// Get a player by ID
+	// (GET /players/{playerId})
+	GetPlayersPlayerId(ctx context.Context, request GetPlayersPlayerIdRequestObject) (GetPlayersPlayerIdResponseObject, error)
+	// Save player data
+	// (PUT /players/{playerId})
+	PutPlayersPlayerId(ctx context.Context, request PutPlayersPlayerIdRequestObject) (PutPlayersPlayerIdResponseObject, error)
+	// Get player custom columns values for a player
+	// (GET /players/{playerId}/customColumns)
+	GetPlayersPlayerIdCustomColumns(ctx context.Context, request GetPlayersPlayerIdCustomColumnsRequestObject) (GetPlayersPlayerIdCustomColumnsResponseObject, error)
+	// Save a player custom value
+	// (PUT /players/{playerId}/customColumns)
+	PutPlayersPlayerIdCustomColumns(ctx context.Context, request PutPlayersPlayerIdCustomColumnsRequestObject) (PutPlayersPlayerIdCustomColumnsResponseObject, error)
+	// Get the schedule for a player
+	// (GET /players/{playerId}/schedule)
+	GetPlayersPlayerIdSchedule(ctx context.Context, request GetPlayersPlayerIdScheduleRequestObject) (GetPlayersPlayerIdScheduleResponseObject, error)
+	// Get all seasons (light version)
+	// (GET /seasons)
+	GetSeasons(ctx context.Context, request GetSeasonsRequestObject) (GetSeasonsResponseObject, error)
+	// Create a season with matches
+	// (POST /seasons)
+	PostSeasons(ctx context.Context, request PostSeasonsRequestObject) (PostSeasonsResponseObject, error)
+	// Get the total number of seasons
+	// (GET /seasons/totalAmount)
+	GetSeasonsTotalAmount(ctx context.Context, request GetSeasonsTotalAmountRequestObject) (GetSeasonsTotalAmountResponseObject, error)
+	// Delete a season
+	// (DELETE /seasons/{seasonId})
+	DeleteSeasonsSeasonId(ctx context.Context, request DeleteSeasonsSeasonIdRequestObject) (DeleteSeasonsSeasonIdResponseObject, error)
+	// Get season details
+	// (GET /seasons/{seasonId})
+	GetSeasonsSeasonId(ctx context.Context, request GetSeasonsSeasonIdRequestObject) (GetSeasonsSeasonIdResponseObject, error)
+	// Update a season metadata
+	// (PUT /seasons/{seasonId})
+	PutSeasonsSeasonId(ctx context.Context, request PutSeasonsSeasonIdRequestObject) (PutSeasonsSeasonIdResponseObject, error)
+	// Get the public schedule link for a season
+	// (GET /seasons/{seasonId}/publicScheduleLink)
+	GetSeasonsSeasonIdPublicScheduleLink(ctx context.Context, request GetSeasonsSeasonIdPublicScheduleLinkRequestObject) (GetSeasonsSeasonIdPublicScheduleLinkResponseObject, error)
+	// Get the scoreboard for a season
+	// (GET /seasons/{seasonId}/scoreboard)
+	GetSeasonsSeasonIdScoreboard(ctx context.Context, request GetSeasonsSeasonIdScoreboardRequestObject) (GetSeasonsSeasonIdScoreboardResponseObject, error)
+	// Get upcoming seasons for the user
+	// (GET /seasons/{seasonId}/upcoming)
+	GetSeasonsSeasonIdUpcoming(ctx context.Context, request GetSeasonsSeasonIdUpcomingRequestObject) (GetSeasonsSeasonIdUpcomingResponseObject, error)
+	// Create a new session / log in an existing user
+	// (POST /sessions)
+	PostSessions(ctx context.Context, request PostSessionsRequestObject) (PostSessionsResponseObject, error)
+	// Handle successful upgrade
+	// (POST /subscriptions/handleSuccessUpgrade)
+	PostSubscriptionsHandleSuccessUpgrade(ctx context.Context, request PostSubscriptionsHandleSuccessUpgradeRequestObject) (PostSubscriptionsHandleSuccessUpgradeResponseObject, error)
+	// Initialize update payment method
+	// (POST /subscriptions/initUpdatePaymentMethod)
+	PostSubscriptionsInitUpdatePaymentMethod(ctx context.Context, request PostSubscriptionsInitUpdatePaymentMethodRequestObject) (PostSubscriptionsInitUpdatePaymentMethodResponseObject, error)
+	// Upgrade user subscription
+	// (POST /subscriptions/upgradeUserSubscription)
+	PostSubscriptionsUpgradeUserSubscription(ctx context.Context, request PostSubscriptionsUpgradeUserSubscriptionRequestObject) (PostSubscriptionsUpgradeUserSubscriptionResponseObject, error)
+	// Send a support message
+	// (POST /support/messages)
+	PostSupportMessages(ctx context.Context, request PostSupportMessagesRequestObject) (PostSupportMessagesResponseObject, error)
+	// Send a reset password link
+	// (POST /users/sendResetPasswordLink)
+	PostUsersSendResetPasswordLink(ctx context.Context, request PostUsersSendResetPasswordLinkRequestObject) (PostUsersSendResetPasswordLinkResponseObject, error)
+	// Send a verification email
+	// (POST /users/sendVerificationEmail)
+	PostUsersSendVerificationEmail(ctx context.Context, request PostUsersSendVerificationEmailRequestObject) (PostUsersSendVerificationEmailResponseObject, error)
+	// Sign up a new user
+	// (POST /users/signUpUser)
+	PostUsersSignUpUser(ctx context.Context, request PostUsersSignUpUserRequestObject) (PostUsersSignUpUserResponseObject, error)
+	// Update user password
+	// (POST /users/updateUserPassword)
+	PostUsersUpdateUserPassword(ctx context.Context, request PostUsersUpdateUserPasswordRequestObject) (PostUsersUpdateUserPasswordResponseObject, error)
+	// Verify a magic link token
+	// (POST /users/verifyMagicLinkToken)
+	PostUsersVerifyMagicLinkToken(ctx context.Context, request PostUsersVerifyMagicLinkTokenRequestObject) (PostUsersVerifyMagicLinkTokenResponseObject, error)
+	// Delete the current user
+	// (DELETE /users/{userId})
+	DeleteUsersUserId(ctx context.Context, request DeleteUsersUserIdRequestObject) (DeleteUsersUserIdResponseObject, error)
+	// Get app settings
+	// (GET /users/{userId}/appsettings)
+	GetUsersUserIdAppsettings(ctx context.Context, request GetUsersUserIdAppsettingsRequestObject) (GetUsersUserIdAppsettingsResponseObject, error)
+	// Save app settings
+	// (POST /users/{userId}/appsettings)
+	PostUsersUserIdAppsettings(ctx context.Context, request PostUsersUserIdAppsettingsRequestObject) (PostUsersUserIdAppsettingsResponseObject, error)
+	// Get all player custom columns
+	// (GET /users/{userId}/customPlayerColumns)
+	GetUsersUserIdCustomPlayerColumns(ctx context.Context, request GetUsersUserIdCustomPlayerColumnsRequestObject) (GetUsersUserIdCustomPlayerColumnsResponseObject, error)
+	// Create a player custom column for the user
+	// (POST /users/{userId}/customPlayerColumns)
+	PostUsersUserIdCustomPlayerColumns(ctx context.Context, request PostUsersUserIdCustomPlayerColumnsRequestObject) (PostUsersUserIdCustomPlayerColumnsResponseObject, error)
+	// Delete a player custom column
+	// (DELETE /users/{userId}/customPlayerColumns/{columnId})
+	DeleteUsersUserIdCustomPlayerColumnsColumnId(ctx context.Context, request DeleteUsersUserIdCustomPlayerColumnsColumnIdRequestObject) (DeleteUsersUserIdCustomPlayerColumnsColumnIdResponseObject, error)
+	// Reset the current user's password
+	// (POST /users/{userId}/resetCurrentUserPassword)
+	PostUsersUserIdResetCurrentUserPassword(ctx context.Context, request PostUsersUserIdResetCurrentUserPasswordRequestObject) (PostUsersUserIdResetCurrentUserPasswordResponseObject, error)
+	// Cancel user subscription
+	// (DELETE /users/{userId}/subscription)
+	DeleteUsersUserIdSubscription(ctx context.Context, request DeleteUsersUserIdSubscriptionRequestObject) (DeleteUsersUserIdSubscriptionResponseObject, error)
+	// Get user subscription details
+	// (GET /users/{userId}/subscription)
+	GetUsersUserIdSubscription(ctx context.Context, request GetUsersUserIdSubscriptionRequestObject) (GetUsersUserIdSubscriptionResponseObject, error)
+	// Get user settings
+	// (GET /users/{userId}/usersettings)
+	GetUsersUserIdUsersettings(ctx context.Context, request GetUsersUserIdUsersettingsRequestObject) (GetUsersUserIdUsersettingsResponseObject, error)
+	// Save user settings
+	// (POST /users/{userId}/usersettings)
+	PostUsersUserIdUsersettings(ctx context.Context, request PostUsersUserIdUsersettingsRequestObject) (PostUsersUserIdUsersettingsResponseObject, error)
+}
+
+type StrictHandlerFunc = strictecho.StrictEchoHandlerFunc
+type StrictMiddlewareFunc = strictecho.StrictEchoMiddlewareFunc
+
+func NewStrictHandler(ssi StrictServerInterface, middlewares []StrictMiddlewareFunc) ServerInterface {
+	return &strictHandler{ssi: ssi, middlewares: middlewares}
+}
+
+type strictHandler struct {
+	ssi         StrictServerInterface
+	middlewares []StrictMiddlewareFunc
+}
+
+// PostMatches operation middleware
+func (sh *strictHandler) PostMatches(ctx echo.Context) error {
+	var request PostMatchesRequestObject
+
+	var body PostMatchesJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostMatches(ctx.Request().Context(), request.(PostMatchesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostMatches")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostMatchesResponseObject); ok {
+		return validResponse.VisitPostMatchesResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PutMatchesBatches operation middleware
+func (sh *strictHandler) PutMatchesBatches(ctx echo.Context) error {
+	var request PutMatchesBatchesRequestObject
+
+	var body PutMatchesBatchesJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PutMatchesBatches(ctx.Request().Context(), request.(PutMatchesBatchesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PutMatchesBatches")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PutMatchesBatchesResponseObject); ok {
+		return validResponse.VisitPutMatchesBatchesResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostMatchesUnassignPlayerFromMatch operation middleware
+func (sh *strictHandler) PostMatchesUnassignPlayerFromMatch(ctx echo.Context) error {
+	var request PostMatchesUnassignPlayerFromMatchRequestObject
+
+	var body PostMatchesUnassignPlayerFromMatchJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostMatchesUnassignPlayerFromMatch(ctx.Request().Context(), request.(PostMatchesUnassignPlayerFromMatchRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostMatchesUnassignPlayerFromMatch")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostMatchesUnassignPlayerFromMatchResponseObject); ok {
+		return validResponse.VisitPostMatchesUnassignPlayerFromMatchResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// DeleteMatchesMatchId operation middleware
+func (sh *strictHandler) DeleteMatchesMatchId(ctx echo.Context, matchId int) error {
+	var request DeleteMatchesMatchIdRequestObject
+
+	request.MatchId = matchId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteMatchesMatchId(ctx.Request().Context(), request.(DeleteMatchesMatchIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteMatchesMatchId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(DeleteMatchesMatchIdResponseObject); ok {
+		return validResponse.VisitDeleteMatchesMatchIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PutMatchesMatchId operation middleware
+func (sh *strictHandler) PutMatchesMatchId(ctx echo.Context, matchId int) error {
+	var request PutMatchesMatchIdRequestObject
+
+	request.MatchId = matchId
+
+	var body PutMatchesMatchIdJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PutMatchesMatchId(ctx.Request().Context(), request.(PutMatchesMatchIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PutMatchesMatchId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PutMatchesMatchIdResponseObject); ok {
+		return validResponse.VisitPutMatchesMatchIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetPlayers operation middleware
+func (sh *strictHandler) GetPlayers(ctx echo.Context, params GetPlayersParams) error {
+	var request GetPlayersRequestObject
+
+	request.Params = params
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetPlayers(ctx.Request().Context(), request.(GetPlayersRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetPlayers")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetPlayersResponseObject); ok {
+		return validResponse.VisitGetPlayersResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostPlayers operation middleware
+func (sh *strictHandler) PostPlayers(ctx echo.Context) error {
+	var request PostPlayersRequestObject
+
+	var body PostPlayersJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostPlayers(ctx.Request().Context(), request.(PostPlayersRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostPlayers")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostPlayersResponseObject); ok {
+		return validResponse.VisitPostPlayersResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// DeletePlayersPlayerId operation middleware
+func (sh *strictHandler) DeletePlayersPlayerId(ctx echo.Context, playerId int) error {
+	var request DeletePlayersPlayerIdRequestObject
+
+	request.PlayerId = playerId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.DeletePlayersPlayerId(ctx.Request().Context(), request.(DeletePlayersPlayerIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeletePlayersPlayerId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(DeletePlayersPlayerIdResponseObject); ok {
+		return validResponse.VisitDeletePlayersPlayerIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetPlayersPlayerId operation middleware
+func (sh *strictHandler) GetPlayersPlayerId(ctx echo.Context, playerId int) error {
+	var request GetPlayersPlayerIdRequestObject
+
+	request.PlayerId = playerId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetPlayersPlayerId(ctx.Request().Context(), request.(GetPlayersPlayerIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetPlayersPlayerId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetPlayersPlayerIdResponseObject); ok {
+		return validResponse.VisitGetPlayersPlayerIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PutPlayersPlayerId operation middleware
+func (sh *strictHandler) PutPlayersPlayerId(ctx echo.Context, playerId int) error {
+	var request PutPlayersPlayerIdRequestObject
+
+	request.PlayerId = playerId
+
+	var body PutPlayersPlayerIdJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PutPlayersPlayerId(ctx.Request().Context(), request.(PutPlayersPlayerIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PutPlayersPlayerId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PutPlayersPlayerIdResponseObject); ok {
+		return validResponse.VisitPutPlayersPlayerIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetPlayersPlayerIdCustomColumns operation middleware
+func (sh *strictHandler) GetPlayersPlayerIdCustomColumns(ctx echo.Context, playerId int) error {
+	var request GetPlayersPlayerIdCustomColumnsRequestObject
+
+	request.PlayerId = playerId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetPlayersPlayerIdCustomColumns(ctx.Request().Context(), request.(GetPlayersPlayerIdCustomColumnsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetPlayersPlayerIdCustomColumns")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetPlayersPlayerIdCustomColumnsResponseObject); ok {
+		return validResponse.VisitGetPlayersPlayerIdCustomColumnsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PutPlayersPlayerIdCustomColumns operation middleware
+func (sh *strictHandler) PutPlayersPlayerIdCustomColumns(ctx echo.Context, playerId int) error {
+	var request PutPlayersPlayerIdCustomColumnsRequestObject
+
+	request.PlayerId = playerId
+
+	var body PutPlayersPlayerIdCustomColumnsJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PutPlayersPlayerIdCustomColumns(ctx.Request().Context(), request.(PutPlayersPlayerIdCustomColumnsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PutPlayersPlayerIdCustomColumns")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PutPlayersPlayerIdCustomColumnsResponseObject); ok {
+		return validResponse.VisitPutPlayersPlayerIdCustomColumnsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetPlayersPlayerIdSchedule operation middleware
+func (sh *strictHandler) GetPlayersPlayerIdSchedule(ctx echo.Context, playerId int) error {
+	var request GetPlayersPlayerIdScheduleRequestObject
+
+	request.PlayerId = playerId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetPlayersPlayerIdSchedule(ctx.Request().Context(), request.(GetPlayersPlayerIdScheduleRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetPlayersPlayerIdSchedule")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetPlayersPlayerIdScheduleResponseObject); ok {
+		return validResponse.VisitGetPlayersPlayerIdScheduleResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetSeasons operation middleware
+func (sh *strictHandler) GetSeasons(ctx echo.Context) error {
+	var request GetSeasonsRequestObject
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetSeasons(ctx.Request().Context(), request.(GetSeasonsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetSeasons")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetSeasonsResponseObject); ok {
+		return validResponse.VisitGetSeasonsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostSeasons operation middleware
+func (sh *strictHandler) PostSeasons(ctx echo.Context) error {
+	var request PostSeasonsRequestObject
+
+	var body PostSeasonsJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostSeasons(ctx.Request().Context(), request.(PostSeasonsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostSeasons")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostSeasonsResponseObject); ok {
+		return validResponse.VisitPostSeasonsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetSeasonsTotalAmount operation middleware
+func (sh *strictHandler) GetSeasonsTotalAmount(ctx echo.Context) error {
+	var request GetSeasonsTotalAmountRequestObject
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetSeasonsTotalAmount(ctx.Request().Context(), request.(GetSeasonsTotalAmountRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetSeasonsTotalAmount")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetSeasonsTotalAmountResponseObject); ok {
+		return validResponse.VisitGetSeasonsTotalAmountResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// DeleteSeasonsSeasonId operation middleware
+func (sh *strictHandler) DeleteSeasonsSeasonId(ctx echo.Context, seasonId int) error {
+	var request DeleteSeasonsSeasonIdRequestObject
+
+	request.SeasonId = seasonId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteSeasonsSeasonId(ctx.Request().Context(), request.(DeleteSeasonsSeasonIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteSeasonsSeasonId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(DeleteSeasonsSeasonIdResponseObject); ok {
+		return validResponse.VisitDeleteSeasonsSeasonIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetSeasonsSeasonId operation middleware
+func (sh *strictHandler) GetSeasonsSeasonId(ctx echo.Context, seasonId int) error {
+	var request GetSeasonsSeasonIdRequestObject
+
+	request.SeasonId = seasonId
+
+	var body GetSeasonsSeasonIdJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetSeasonsSeasonId(ctx.Request().Context(), request.(GetSeasonsSeasonIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetSeasonsSeasonId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetSeasonsSeasonIdResponseObject); ok {
+		return validResponse.VisitGetSeasonsSeasonIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PutSeasonsSeasonId operation middleware
+func (sh *strictHandler) PutSeasonsSeasonId(ctx echo.Context, seasonId int) error {
+	var request PutSeasonsSeasonIdRequestObject
+
+	request.SeasonId = seasonId
+
+	var body PutSeasonsSeasonIdJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PutSeasonsSeasonId(ctx.Request().Context(), request.(PutSeasonsSeasonIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PutSeasonsSeasonId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PutSeasonsSeasonIdResponseObject); ok {
+		return validResponse.VisitPutSeasonsSeasonIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetSeasonsSeasonIdPublicScheduleLink operation middleware
+func (sh *strictHandler) GetSeasonsSeasonIdPublicScheduleLink(ctx echo.Context, seasonId int) error {
+	var request GetSeasonsSeasonIdPublicScheduleLinkRequestObject
+
+	request.SeasonId = seasonId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetSeasonsSeasonIdPublicScheduleLink(ctx.Request().Context(), request.(GetSeasonsSeasonIdPublicScheduleLinkRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetSeasonsSeasonIdPublicScheduleLink")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetSeasonsSeasonIdPublicScheduleLinkResponseObject); ok {
+		return validResponse.VisitGetSeasonsSeasonIdPublicScheduleLinkResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetSeasonsSeasonIdScoreboard operation middleware
+func (sh *strictHandler) GetSeasonsSeasonIdScoreboard(ctx echo.Context, seasonId int) error {
+	var request GetSeasonsSeasonIdScoreboardRequestObject
+
+	request.SeasonId = seasonId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetSeasonsSeasonIdScoreboard(ctx.Request().Context(), request.(GetSeasonsSeasonIdScoreboardRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetSeasonsSeasonIdScoreboard")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetSeasonsSeasonIdScoreboardResponseObject); ok {
+		return validResponse.VisitGetSeasonsSeasonIdScoreboardResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetSeasonsSeasonIdUpcoming operation middleware
+func (sh *strictHandler) GetSeasonsSeasonIdUpcoming(ctx echo.Context, seasonId int) error {
+	var request GetSeasonsSeasonIdUpcomingRequestObject
+
+	request.SeasonId = seasonId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetSeasonsSeasonIdUpcoming(ctx.Request().Context(), request.(GetSeasonsSeasonIdUpcomingRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetSeasonsSeasonIdUpcoming")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetSeasonsSeasonIdUpcomingResponseObject); ok {
+		return validResponse.VisitGetSeasonsSeasonIdUpcomingResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostSessions operation middleware
+func (sh *strictHandler) PostSessions(ctx echo.Context) error {
+	var request PostSessionsRequestObject
+
+	var body PostSessionsJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostSessions(ctx.Request().Context(), request.(PostSessionsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostSessions")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostSessionsResponseObject); ok {
+		return validResponse.VisitPostSessionsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostSubscriptionsHandleSuccessUpgrade operation middleware
+func (sh *strictHandler) PostSubscriptionsHandleSuccessUpgrade(ctx echo.Context) error {
+	var request PostSubscriptionsHandleSuccessUpgradeRequestObject
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostSubscriptionsHandleSuccessUpgrade(ctx.Request().Context(), request.(PostSubscriptionsHandleSuccessUpgradeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostSubscriptionsHandleSuccessUpgrade")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostSubscriptionsHandleSuccessUpgradeResponseObject); ok {
+		return validResponse.VisitPostSubscriptionsHandleSuccessUpgradeResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostSubscriptionsInitUpdatePaymentMethod operation middleware
+func (sh *strictHandler) PostSubscriptionsInitUpdatePaymentMethod(ctx echo.Context) error {
+	var request PostSubscriptionsInitUpdatePaymentMethodRequestObject
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostSubscriptionsInitUpdatePaymentMethod(ctx.Request().Context(), request.(PostSubscriptionsInitUpdatePaymentMethodRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostSubscriptionsInitUpdatePaymentMethod")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostSubscriptionsInitUpdatePaymentMethodResponseObject); ok {
+		return validResponse.VisitPostSubscriptionsInitUpdatePaymentMethodResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostSubscriptionsUpgradeUserSubscription operation middleware
+func (sh *strictHandler) PostSubscriptionsUpgradeUserSubscription(ctx echo.Context) error {
+	var request PostSubscriptionsUpgradeUserSubscriptionRequestObject
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostSubscriptionsUpgradeUserSubscription(ctx.Request().Context(), request.(PostSubscriptionsUpgradeUserSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostSubscriptionsUpgradeUserSubscription")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostSubscriptionsUpgradeUserSubscriptionResponseObject); ok {
+		return validResponse.VisitPostSubscriptionsUpgradeUserSubscriptionResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostSupportMessages operation middleware
+func (sh *strictHandler) PostSupportMessages(ctx echo.Context) error {
+	var request PostSupportMessagesRequestObject
+
+	var body PostSupportMessagesJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostSupportMessages(ctx.Request().Context(), request.(PostSupportMessagesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostSupportMessages")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostSupportMessagesResponseObject); ok {
+		return validResponse.VisitPostSupportMessagesResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUsersSendResetPasswordLink operation middleware
+func (sh *strictHandler) PostUsersSendResetPasswordLink(ctx echo.Context) error {
+	var request PostUsersSendResetPasswordLinkRequestObject
+
+	var body PostUsersSendResetPasswordLinkJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUsersSendResetPasswordLink(ctx.Request().Context(), request.(PostUsersSendResetPasswordLinkRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUsersSendResetPasswordLink")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUsersSendResetPasswordLinkResponseObject); ok {
+		return validResponse.VisitPostUsersSendResetPasswordLinkResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUsersSendVerificationEmail operation middleware
+func (sh *strictHandler) PostUsersSendVerificationEmail(ctx echo.Context) error {
+	var request PostUsersSendVerificationEmailRequestObject
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUsersSendVerificationEmail(ctx.Request().Context(), request.(PostUsersSendVerificationEmailRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUsersSendVerificationEmail")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUsersSendVerificationEmailResponseObject); ok {
+		return validResponse.VisitPostUsersSendVerificationEmailResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUsersSignUpUser operation middleware
+func (sh *strictHandler) PostUsersSignUpUser(ctx echo.Context) error {
+	var request PostUsersSignUpUserRequestObject
+
+	var body PostUsersSignUpUserJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUsersSignUpUser(ctx.Request().Context(), request.(PostUsersSignUpUserRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUsersSignUpUser")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUsersSignUpUserResponseObject); ok {
+		return validResponse.VisitPostUsersSignUpUserResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUsersUpdateUserPassword operation middleware
+func (sh *strictHandler) PostUsersUpdateUserPassword(ctx echo.Context) error {
+	var request PostUsersUpdateUserPasswordRequestObject
+
+	var body PostUsersUpdateUserPasswordJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUsersUpdateUserPassword(ctx.Request().Context(), request.(PostUsersUpdateUserPasswordRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUsersUpdateUserPassword")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUsersUpdateUserPasswordResponseObject); ok {
+		return validResponse.VisitPostUsersUpdateUserPasswordResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUsersVerifyMagicLinkToken operation middleware
+func (sh *strictHandler) PostUsersVerifyMagicLinkToken(ctx echo.Context) error {
+	var request PostUsersVerifyMagicLinkTokenRequestObject
+
+	var body PostUsersVerifyMagicLinkTokenJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUsersVerifyMagicLinkToken(ctx.Request().Context(), request.(PostUsersVerifyMagicLinkTokenRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUsersVerifyMagicLinkToken")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUsersVerifyMagicLinkTokenResponseObject); ok {
+		return validResponse.VisitPostUsersVerifyMagicLinkTokenResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// DeleteUsersUserId operation middleware
+func (sh *strictHandler) DeleteUsersUserId(ctx echo.Context, userId int) error {
+	var request DeleteUsersUserIdRequestObject
+
+	request.UserId = userId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteUsersUserId(ctx.Request().Context(), request.(DeleteUsersUserIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteUsersUserId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(DeleteUsersUserIdResponseObject); ok {
+		return validResponse.VisitDeleteUsersUserIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetUsersUserIdAppsettings operation middleware
+func (sh *strictHandler) GetUsersUserIdAppsettings(ctx echo.Context, userId int) error {
+	var request GetUsersUserIdAppsettingsRequestObject
+
+	request.UserId = userId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetUsersUserIdAppsettings(ctx.Request().Context(), request.(GetUsersUserIdAppsettingsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetUsersUserIdAppsettings")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetUsersUserIdAppsettingsResponseObject); ok {
+		return validResponse.VisitGetUsersUserIdAppsettingsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUsersUserIdAppsettings operation middleware
+func (sh *strictHandler) PostUsersUserIdAppsettings(ctx echo.Context, userId int) error {
+	var request PostUsersUserIdAppsettingsRequestObject
+
+	request.UserId = userId
+
+	var body PostUsersUserIdAppsettingsJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUsersUserIdAppsettings(ctx.Request().Context(), request.(PostUsersUserIdAppsettingsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUsersUserIdAppsettings")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUsersUserIdAppsettingsResponseObject); ok {
+		return validResponse.VisitPostUsersUserIdAppsettingsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetUsersUserIdCustomPlayerColumns operation middleware
+func (sh *strictHandler) GetUsersUserIdCustomPlayerColumns(ctx echo.Context, userId int) error {
+	var request GetUsersUserIdCustomPlayerColumnsRequestObject
+
+	request.UserId = userId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetUsersUserIdCustomPlayerColumns(ctx.Request().Context(), request.(GetUsersUserIdCustomPlayerColumnsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetUsersUserIdCustomPlayerColumns")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetUsersUserIdCustomPlayerColumnsResponseObject); ok {
+		return validResponse.VisitGetUsersUserIdCustomPlayerColumnsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUsersUserIdCustomPlayerColumns operation middleware
+func (sh *strictHandler) PostUsersUserIdCustomPlayerColumns(ctx echo.Context, userId int) error {
+	var request PostUsersUserIdCustomPlayerColumnsRequestObject
+
+	request.UserId = userId
+
+	var body PostUsersUserIdCustomPlayerColumnsJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUsersUserIdCustomPlayerColumns(ctx.Request().Context(), request.(PostUsersUserIdCustomPlayerColumnsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUsersUserIdCustomPlayerColumns")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUsersUserIdCustomPlayerColumnsResponseObject); ok {
+		return validResponse.VisitPostUsersUserIdCustomPlayerColumnsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// DeleteUsersUserIdCustomPlayerColumnsColumnId operation middleware
+func (sh *strictHandler) DeleteUsersUserIdCustomPlayerColumnsColumnId(ctx echo.Context, userId int, columnId int) error {
+	var request DeleteUsersUserIdCustomPlayerColumnsColumnIdRequestObject
+
+	request.UserId = userId
+	request.ColumnId = columnId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteUsersUserIdCustomPlayerColumnsColumnId(ctx.Request().Context(), request.(DeleteUsersUserIdCustomPlayerColumnsColumnIdRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteUsersUserIdCustomPlayerColumnsColumnId")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(DeleteUsersUserIdCustomPlayerColumnsColumnIdResponseObject); ok {
+		return validResponse.VisitDeleteUsersUserIdCustomPlayerColumnsColumnIdResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUsersUserIdResetCurrentUserPassword operation middleware
+func (sh *strictHandler) PostUsersUserIdResetCurrentUserPassword(ctx echo.Context, userId int) error {
+	var request PostUsersUserIdResetCurrentUserPasswordRequestObject
+
+	request.UserId = userId
+
+	var body PostUsersUserIdResetCurrentUserPasswordJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUsersUserIdResetCurrentUserPassword(ctx.Request().Context(), request.(PostUsersUserIdResetCurrentUserPasswordRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUsersUserIdResetCurrentUserPassword")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUsersUserIdResetCurrentUserPasswordResponseObject); ok {
+		return validResponse.VisitPostUsersUserIdResetCurrentUserPasswordResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// DeleteUsersUserIdSubscription operation middleware
+func (sh *strictHandler) DeleteUsersUserIdSubscription(ctx echo.Context, userId int) error {
+	var request DeleteUsersUserIdSubscriptionRequestObject
+
+	request.UserId = userId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteUsersUserIdSubscription(ctx.Request().Context(), request.(DeleteUsersUserIdSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteUsersUserIdSubscription")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(DeleteUsersUserIdSubscriptionResponseObject); ok {
+		return validResponse.VisitDeleteUsersUserIdSubscriptionResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetUsersUserIdSubscription operation middleware
+func (sh *strictHandler) GetUsersUserIdSubscription(ctx echo.Context, userId int) error {
+	var request GetUsersUserIdSubscriptionRequestObject
+
+	request.UserId = userId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetUsersUserIdSubscription(ctx.Request().Context(), request.(GetUsersUserIdSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetUsersUserIdSubscription")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetUsersUserIdSubscriptionResponseObject); ok {
+		return validResponse.VisitGetUsersUserIdSubscriptionResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetUsersUserIdUsersettings operation middleware
+func (sh *strictHandler) GetUsersUserIdUsersettings(ctx echo.Context, userId int) error {
+	var request GetUsersUserIdUsersettingsRequestObject
+
+	request.UserId = userId
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetUsersUserIdUsersettings(ctx.Request().Context(), request.(GetUsersUserIdUsersettingsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetUsersUserIdUsersettings")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetUsersUserIdUsersettingsResponseObject); ok {
+		return validResponse.VisitGetUsersUserIdUsersettingsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUsersUserIdUsersettings operation middleware
+func (sh *strictHandler) PostUsersUserIdUsersettings(ctx echo.Context, userId int) error {
+	var request PostUsersUserIdUsersettingsRequestObject
+
+	request.UserId = userId
+
+	var body PostUsersUserIdUsersettingsJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUsersUserIdUsersettings(ctx.Request().Context(), request.(PostUsersUserIdUsersettingsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUsersUserIdUsersettings")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUsersUserIdUsersettingsResponseObject); ok {
+		return validResponse.VisitPostUsersUserIdUsersettingsResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
 }
