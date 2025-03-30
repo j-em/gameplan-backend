@@ -267,16 +267,3 @@ func main() {
 		e.Logger.Fatal(err)
 	}
 }
-
-// --- Dummy types needed to satisfy interface if not using actual implementation ---
-// (These might be needed if you haven't implemented all request/response bodies fully)
-// type AddMatchParams = api.AddMatchParams
-// type GetPlayersParams = api.GetPlayersParams
-// ... and so on for all parameter/body types used in the interface methods
-// Note: Since we are importing the 'api' package, these explicit type aliases
-// are usually not necessary unless there's a naming conflict or specific reason.
-// The stubs above directly use types like api.GetPlayersParams.
-
-// --- Placeholder for openapi_types if needed ---
-// (Usually provided by oapi-codegen/runtime)
-// type Date = openapi_types.Date
