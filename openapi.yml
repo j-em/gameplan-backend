@@ -1,0 +1,1279 @@
+openapi: 3.0.0
+info:
+  title: Gameplan Backend API
+  version: 1.0.0
+  description: OpenAPI specification for the Gameplan backend infrastructure.
+servers:
+  - url: https://gameplan-api-prod.jeremyallard.dev
+    description: Production API server
+
+  - url: https://gameplan-api-dev.jeremyallard.dev
+    description: Dev API server
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ApiResult:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+        data:
+          type: object
+          nullable: true
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            code:
+              type: string
+          nullable: true
+
+    DbMatch:
+      type: object
+      properties:
+        id:
+          type: integer
+        seasonId:
+          type: integer
+        playerId1:
+          type: integer
+        playerId2:
+          type: integer
+        playerId1Points:
+          type: integer
+        playerId2Points:
+          type: integer
+        matchDate:
+          type: string
+          format: date
+        group:
+          type: integer
+
+    DbMatchCustomColumn:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    DbMatchCustomValue:
+      type: object
+      properties:
+        id:
+          type: integer
+        matchId:
+          type: integer
+        columnId:
+          type: integer
+        value:
+          type: string
+
+    AddMatchParams:
+      type: object
+      properties:
+        seasonId:
+          type: integer
+        playerId1:
+          type: integer
+        playerId2:
+          type: integer
+        matchDate:
+          type: string
+          format: date
+        group:
+          type: integer
+      required:
+        - seasonId
+        - playerId1
+        - playerId2
+        - matchDate
+        - group
+
+    SaveMatchDataParams:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: object
+      required:
+        - matchId
+        - key
+        - value
+
+    UnassignPlayerFromMatchParams:
+      type: object
+      properties:
+        playerId:
+          type: integer
+        matchId:
+          type: integer
+      required:
+        - playerId
+        - matchId
+
+    CreatePoolPlayerParams:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          nullable: true
+        emailNotificationsEnabled:
+          type: boolean
+      required:
+        - name
+        - emailNotificationsEnabled
+
+    CreatePlayerCustomColumnParams:
+      type: object
+      properties:
+        name:
+          type: string
+        fieldType:
+          type: string
+          enum:
+            - text
+            - number
+            - date
+            - boolean
+            - select
+        description:
+          type: string
+          nullable: true
+        isRequired:
+          type: boolean
+          nullable: true
+        displayOrder:
+          type: integer
+          nullable: true
+      required:
+        - name
+        - fieldType
+
+    SavePlayerCustomValueParams:
+      type: object
+      properties:
+        playerId:
+          type: integer
+        columnId:
+          type: integer
+        value:
+          type: string
+      required:
+        - playerId
+        - columnId
+        - value
+
+    GetPlayersParams:
+      type: object
+      properties:
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+        - limit
+        - offset
+
+    SavePlayerDataParams:
+      type: object
+      properties:
+        playerId:
+          type: integer
+        key:
+          type: string
+        value:
+          type: object
+      required:
+        - playerId
+        - key
+        - value
+
+    CreateSeasonParams:
+      type: object
+      properties:
+        name:
+          type: string
+        startDate:
+          type: string
+          format: date
+        amountOfTables:
+          type: integer
+        seasonType:
+          type: string
+        players:
+          type: array
+          items:
+            type: integer
+      required:
+        - name
+        - startDate
+        - amountOfTables
+        - seasonType
+        - players
+
+    GetSeasonDetailsParams:
+      type: object
+      properties:
+        seasonId:
+          type: integer
+      required:
+        - seasonId
+
+    UpdateSeasonParams:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - seasonId
+        - name
+
+    SendSupportMessageParams:
+      type: object
+      properties:
+        content:
+          type: string
+        messageType:
+          type: string
+        from:
+          type: string
+      required:
+        - content
+        - messageType
+        - from
+
+    SignUpUserParams:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        confirmPassword:
+          type: string
+        phone:
+          type: string
+          nullable: true
+        country:
+          type: string
+        lang:
+          type: string
+          enum:
+            - fr
+            - en
+        birthday:
+          type: string
+          format: date
+          nullable: true
+        acceptTerms:
+          type: boolean
+      required:
+        - name
+        - email
+        - password
+        - confirmPassword
+        - country
+        - lang
+        - acceptTerms
+
+    LoginUserParams:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    SendResetPasswordLinkParams:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+        - email
+
+    ResetCurrentUserPasswordParams:
+      type: object
+      properties:
+        newPassword:
+          type: string
+        token:
+          type: string
+        newPasswordConfirm:
+          type: string
+      required:
+        - newPassword
+        - token
+        - newPasswordConfirm
+
+    SaveUserSettingsParams:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        lang:
+          type: string
+          nullable: true
+        birthday:
+          type: string
+          format: date
+          nullable: true
+
+    UpdateUserPasswordParams:
+      type: object
+      properties:
+        token:
+          type: string
+        password:
+          type: string
+        passwordConfirmation:
+          type: string
+      required:
+        - token
+        - password
+        - passwordConfirmation
+
+    SaveAppSettingsParams:
+      type: object
+      properties:
+        settings:
+          type: object # Assuming AppSettings is a complex object
+      required:
+        - settings
+
+paths:
+  /matches/batches:
+    put:
+      summary: Update multiple matches at the same time
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/DbMatch"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /matches:
+    post:
+      summary: Add a new match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddMatchParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /matches/{matchId}:
+    parameters:
+      - in: path
+        name: matchId
+        schema:
+          type: integer
+        required: true
+        description: The ID of the match to delete
+    delete:
+      summary: Delete a match
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+    put:
+      summary: Save match data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveMatchDataParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /matches/unassignPlayerFromMatch:
+    post:
+      summary: Unassign a player from a match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnassignPlayerFromMatchParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /players:
+    post:
+      summary: Create a pool player
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePoolPlayerParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+    get:
+      summary: Get a list of players
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: true
+          description: The maximum number of players to return
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          required: true
+          description: The offset to start from
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        player:
+                          $ref: "#/components/schemas/DbPlayer"
+                        customValues:
+                          type: object
+                          additionalProperties:
+                            type: string
+
+  /players/{playerId}/schedule:
+    get:
+      summary: Get the schedule for a player
+      parameters:
+        - in: path
+          name: playerId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the player to retrieve the schedule for
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        match:
+                          $ref: "#/components/schemas/DbMatch"
+                        season:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+
+  /players/{playerId}/customColumns:
+    parameters:
+      - in: path
+        name: playerId
+        schema:
+          type: integer
+        required: true
+        description: The ID of the player to retrieve custom values for
+    get:
+      summary: Get player custom columns values for a player
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DbPlayerCustomValue"
+
+    put:
+      summary: Save a player custom value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SavePlayerCustomValueParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /players/{playerId}:
+    put:
+      summary: Save player data
+      parameters:
+        - in: path
+          name: playerId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the player
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SavePlayerDataParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+    delete:
+      summary: Delete a player
+      parameters:
+        - in: path
+          name: playerId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the player to delete
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+    get:
+      summary: Get a player by ID
+      parameters:
+        - in: path
+          name: playerId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the player to retrieve
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      player:
+                        $ref: "#/components/schemas/DbPlayer"
+                      customValues:
+                        type: object
+                        additionalProperties:
+                          type: string
+
+  /seasons:
+    get:
+      summary: Get all seasons (light version)
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+    post:
+      summary: Create a season with matches
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSeasonParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      season:
+                        $ref: "#/components/schemas/DbSeason"
+                      matches:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DbMatch"
+
+  /seasons/{seasonId}/publicScheduleLink:
+    get:
+      summary: Get the public schedule link for a season
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: string
+
+  /seasons/{seasonId}/upcoming:
+    get:
+      summary: Get upcoming seasons for the user
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      seasons:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DbSeason"
+  /seasons/{seasonId}:
+    put:
+      summary: Update a season metadata
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSeasonParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+    delete:
+      summary: Delete a season
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season to delete
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+    get:
+      summary: Get season details
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season to retrieve details for
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetSeasonDetailsParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      season:
+                        $ref: "#/components/schemas/DbSeason"
+                      players:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/DbPlayer"
+                      allMatches:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            match:
+                              $ref: "#/components/schemas/DbMatch"
+                            player1Name:
+                              type: string
+                            player2Name:
+                              type: string
+
+  /seasons/{seasonId}/scoreboard:
+    get:
+      summary: Get the scoreboard for a season
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season to retrieve the scoreboard for
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      scoreboard:
+                        type: array
+                        items:
+                          type: object
+                      seasonName:
+                        type: string
+
+  /seasons/totalAmount:
+    get:
+      summary: Get the total number of seasons
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      totalSeasons:
+                        type: integer
+
+  /support/messages:
+    post:
+      summary: Send a support message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendSupportMessageParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /users/{userId}/customPlayerColumns/{columnId}:
+    delete:
+      summary: Delete a player custom column
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the user
+        - in: path
+          name: columnId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the player custom column to delete
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+  /users/{userId}/customPlayerColumns:
+    parameters:
+      - in: path
+        name: userId
+        schema:
+          type: integer
+        required: true
+        description: The ID of the user
+    get:
+      summary: Get all player custom columns
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DbPlayerCustomColumn"
+    post:
+      summary: Create a player custom column for the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlayerCustomColumnParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /users/sendVerificationEmail:
+    post:
+      summary: Send a verification email
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /users/verifyMagicLinkToken:
+    post:
+      summary: Verify a magic link token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+              required:
+                - token
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /users/signUpUser:
+    post:
+      summary: Sign up a new user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpUserParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /sessions:
+    post:
+      summary: Create a new session / log in an existing user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUserParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /users/sendResetPasswordLink:
+    post:
+      summary: Send a reset password link
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendResetPasswordLinkParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /users/{userId}/resetCurrentUserPassword:
+    parameters:
+      - in: path
+        name: userId
+        schema:
+          type: integer
+        required: true
+        description: The ID of the user
+    post:
+      summary: Reset the current user's password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetCurrentUserPasswordParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /users/{userId}/usersettings:
+    post:
+      summary: Save user settings
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveUserSettingsParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+    get:
+      summary: Get user settings
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the user
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      phone:
+                        type: string
+                        nullable: true
+                      name:
+                        type: string
+                      isVerified:
+                        type: boolean
+                      lang:
+                        type: string
+                      birthday:
+                        type: string
+                        format: date
+                      tier:
+                        type: string
+
+  /users/{userId}:
+    delete:
+      summary: Delete the current user
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the user to delete
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /users/updateUserPassword:
+    post:
+      summary: Update user password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserPasswordParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /users/{userId}/appsettings:
+    parameters:
+      - in: path
+        name: userId
+        schema:
+          type: integer
+        required: true
+        description: The ID of the user
+    post:
+      summary: Save app settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveAppSettingsParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+    get:
+      summary: Get app settings
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object # Assuming AppSettings is a complex object
+
+  /users/{userId}/subscription:
+    get:
+      summary: Get user subscription details
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+            description: The ID of the user
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      subscriptionTier:
+                        type: string
+                      cancellationAllowed:
+                        type: boolean
+                      features:
+                        type: object
+
+    delete:
+      summary: Cancel user subscription
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the user
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /subscriptions/initUpdatePaymentMethod:
+    post:
+      summary: Initialize update payment method
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      clientSecret:
+                        type: string
+                      paymentMethod:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                          last4:
+                            type: string
+
+  /subscriptions/handleSuccessUpgrade:
+    post:
+      summary: Handle successful upgrade
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+
+  /subscriptions/upgradeUserSubscription:
+    post:
+      summary: Upgrade user subscription
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      clientSecret:
+                        type: string
