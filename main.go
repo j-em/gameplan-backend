@@ -8,12 +8,15 @@ import (
 
 	"github.com/gameplan-backend/api"
 	"github.com/gameplan-backend/api_server"
+	"github.com/gameplan-backend/db"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/mailgun/mailgun-go/v4"
 
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echomiddleware "github.com/oapi-codegen/echo-middleware"
-	"github.com/stripe/stripe-go/v81/client"
+	"github.com/stripe/stripe-go/v78/client"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/stytchapi"
 )
 
@@ -52,14 +55,38 @@ func main() {
 	}
 
 	// Create the API implementation
+	// Initialize Mailgun client
+	mailgunDomain := os.Getenv("MAILGUN_DOMAIN")
+	mailgunAPIKey := os.Getenv("MAILGUN_API_KEY")
+	if mailgunDomain == "" || mailgunAPIKey == "" {
+		panic("MAILGUN_DOMAIN and MAILGUN_API_KEY environment variables must be set")
+	}
+	mg := mailgun.NewMailgun(mailgunDomain, mailgunAPIKey)
+
+	// Initialize Database with connection pooling
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		panic("DATABASE_URL environment variable must be set")
+	}
+	dbPool, err := pgxpool.New(context.Background(), dbURL)
+	if err != nil {
+		panic(fmt.Sprintf("Unable to connect to database: %v", err))
+	}
+	dbQueries := db.New(dbPool)
+
+	// Initialize Stripe client
 	stripeKey := os.Getenv("STRIPE_SECRET_KEY")
 	if stripeKey == "" {
 		panic("STRIPE_SECRET_KEY environment variable must be set")
 	}
-
 	stripeClient := client.New(stripeKey, nil)
 
-	myApi := &api_server.MyApiServer{StytchClient: stytchClient, StripeClient: stripeClient}
+	myApi := &api_server.MyApiServer{
+		StytchClient: stytchClient,
+		StripeClient: stripeClient,
+		DB:           dbQueries,
+		Emailer:      mg,
+	}
 
 	// Authentication middleware
 	e.Use(api.AuthMiddleware(stytchClient))

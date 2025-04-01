@@ -2,18 +2,27 @@ package api_server
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/gameplan-backend/api"
-	"github.com/stripe/stripe-go/v81/client"
+	"github.com/gameplan-backend/db"
+	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/mailgun/mailgun-go/v4"
+	"github.com/stripe/stripe-go/v78"
+	"github.com/stripe/stripe-go/v78/client"
+	"github.com/stytchauth/stytch-go/stytch"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/passwords"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/stytchapi"
+	"github.com/stytchauth/stytch-go/v16/stytch/consumer/users"
 )
 
 // MyApiServer provides a concrete implementation of the generated StrictServerInterface.
 type MyApiServer struct {
 	StytchClient *stytchapi.API
 	StripeClient *client.API
+	DB           *db.Queries
+	Emailer      *mailgun.MailgunImpl
 }
 
 func (s *MyApiServer) PostSessions(ctx context.Context, request api.PostSessionsRequestObject) (api.PostSessionsResponseObject, error) {
@@ -50,18 +59,149 @@ func (s *MyApiServer) PostSessions(ctx context.Context, request api.PostSessions
 		IsSuccess: Ptr(true),
 	}), nil
 }
-
 func (s *MyApiServer) PostUsersSignUpUser(ctx context.Context, request api.PostUsersSignUpUserRequestObject) (api.PostUsersSignUpUserResponseObject, error) {
-	// --- TODO: Implement user sign up logic ---
-	// should create customer on stripe
-	// should send confirmation email
-	fmt.Println("Received request for POST /users/signUpUser")
+	params := request.Body
+
+	// Validate password length
+	if len(params.Password) < 8 {
+		return api.PostUsersSignUpUser200JSONResponse(api.ApiResult{
+			Error: &struct {
+				Code    *string `json:"code,omitempty"`
+				Message *string `json:"message,omitempty"`
+			}{
+				Code:    Ptr("WEAK_PASSWORD"),
+				Message: Ptr("Password must be at least 8 characters"),
+			},
+			IsSuccess: Ptr(false),
+		}), nil
+	}
+
+	// Create Stytch user
+	stytchResp, err := s.StytchClient.Passwords.Create(ctx, &passwords.CreateParams{
+		Email:    params.Email,
+		Password: params.Password,
+	})
+	if err != nil {
+		var stytchErr *stytch.Error
+		if errors.As(err, &stytchErr) {
+			switch stytchErr.ErrorType {
+			case "duplicate_email":
+				return api.PostUsersSignUpUser200JSONResponse(api.ApiResult{
+					Error: &struct {
+						Code    *string `json:"code,omitempty"`
+						Message *string `json:"message,omitempty"`
+					}{
+						Code:    Ptr("DUPLICATE_EMAIL"),
+						Message: Ptr("Email address already exists"),
+					},
+					IsSuccess: Ptr(false),
+				}), nil
+			case "invalid_email":
+				return api.PostUsersSignUpUser200JSONResponse(api.ApiResult{
+					Error: &struct {
+						Code    *string `json:"code,omitempty"`
+						Message *string `json:"message,omitempty"`
+					}{
+						Code:    Ptr("INVALID_EMAIL"),
+						Message: Ptr("Invalid email address format"),
+					},
+					IsSuccess: Ptr(false),
+				}), nil
+			}
+		}
+		return api.PostUsersSignUpUser200JSONResponse(api.ApiResult{
+			Error: &struct {
+				Code    *string `json:"code,omitempty"`
+				Message *string `json:"message,omitempty"`
+			}{
+				Code:    Ptr("STYTCH_ERROR"),
+				Message: Ptr("Failed to create user account"),
+			},
+			IsSuccess: Ptr(false),
+		}), nil
+	}
+
+	// Create Stripe customer
+	customer, err := s.StripeClient.Customers.New(&stripe.CustomerParams{
+		Email: stripe.String(params.Email),
+		Name:  stripe.String(params.Name),
+		Params: stripe.Params{
+			Metadata: map[string]string{
+				"stytchId": stytchResp.UserID,
+			},
+		},
+	})
+	if err != nil {
+		return api.PostUsersSignUpUser200JSONResponse(api.ApiResult{
+			Error: &struct {
+				Code    *string `json:"code,omitempty"`
+				Message *string `json:"message,omitempty"`
+			}{
+				Code:    Ptr("STRIPE_ERROR"),
+				Message: Ptr("Failed to create billing profile"),
+			},
+			IsSuccess: Ptr(false),
+		}), nil
+	}
+
+	// Create database user
+	birthday := pgtype.Int4{}
+	if params.Birthday != nil {
+		birthday.Int32 = int32(params.Birthday.Unix())
+		birthday.Valid = true
+		birthday.Valid = true
+	}
+
+	dbUser, err := s.DB.CreateUser(ctx, db.CreateUserParams{
+		Stytchid:   stytchResp.UserID,
+		Stripeid:   customer.ID,
+		Name:       params.Name,
+		Email:      params.Email,
+		Phone:      pgtype.Text{Valid: false},
+		Country:    pgtype.Text{Valid: false},
+		Birthday:   birthday,
+		Lang:       "en",
+		Isverified: false,
+	})
+	if err != nil {
+		return api.PostUsersSignUpUser200JSONResponse(api.ApiResult{
+			Error: &struct {
+				Code    *string `json:"code,omitempty"`
+				Message *string `json:"message,omitempty"`
+			}{
+				Code:    Ptr("DATABASE_ERROR"),
+				Message: Ptr("Failed to save user information"),
+			},
+			IsSuccess: Ptr(false),
+		}), nil
+	}
+
+	// Update Stytch metadata with our internal user ID
+	_, err = s.StytchClient.Users.Update(ctx, &users.UpdateParams{
+		UserID: stytchResp.UserID,
+		TrustedMetadata: map[string]interface{}{
+			"userId": dbUser.ID,
+		},
+	})
+	if err != nil {
+		// Log but continue since user is already created
+		fmt.Printf("Failed to update Stytch metadata: %v\n", err)
+	}
+
+	// Send confirmation email
+	_, _, err = s.Emailer.Send(ctx, s.Emailer.NewMessage(
+		"no-reply@gameplan.com", // From (should be configured)
+		"Welcome to Gameplan",   // Subject
+		"",                      // Text body
+		params.Email,            // To
+	))
+	if err != nil {
+		// Log but continue since email is non-critical
+		fmt.Printf("Failed to send confirmation email: %v\n", err)
+	}
+
 	return api.PostUsersSignUpUser200JSONResponse(api.ApiResult{
-		Error: &struct {
-			Code    *string `json:"code,omitempty"`
-			Message *string `json:"message,omitempty"`
-		}{Code: Ptr("NOT_IMPLEMENTED"), Message: Ptr("Sign up not implemented yet")},
-		IsSuccess: Ptr(false),
+		IsSuccess: Ptr(true),
 	}), nil
 }
 
@@ -212,7 +352,7 @@ func (s *MyApiServer) PutPlayersPlayerIdCustomColumns(ctx context.Context, reque
 		IsSuccess: Ptr(false),
 	}), nil
 }
-func (极s *MyApiServer) GetPlayersPlayerIdSchedule(ctx context.Context, request api.GetPlayersPlayerIdScheduleRequestObject) (api.GetPlayersPlayerIdScheduleResponseObject, error) {
+func (s *MyApiServer) GetPlayersPlayerIdSchedule(ctx context.Context, request api.GetPlayersPlayerIdScheduleRequestObject) (api.GetPlayersPlayerIdScheduleResponseObject, error) {
 	return api.GetPlayersPlayerIdSchedule200JSONResponse(api.ApiResult{
 		Error: &struct {
 			Code    *string `json:"code,omitempty"`
