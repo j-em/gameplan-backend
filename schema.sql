@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     stytchId varchar(40) NOT NULL,
     stripeId varchar(30) NOT NULL,
     name varchar(255) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE players (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     userId INTEGER REFERENCES users (id),
     name varchar(255) NOT NULL,
     email varchar(255),
@@ -31,7 +31,7 @@ CREATE TABLE players (
 );
 
 CREATE TABLE seasons (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     userId INTEGER REFERENCES users (id),
     name varchar(255) NOT NULL,
     startDate date NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE seasons (
 );
 
 CREATE TABLE matches (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     seasonId integer REFERENCES seasons (id),
     playerId1 integer REFERENCES players (id),
     playerId1Points integer NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE matches (
 );
 
 CREATE TABLE player_custom_columns (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     field_type VARCHAR(50) NOT NULL,
     description TEXT,
@@ -86,7 +86,7 @@ CREATE TABLE player_custom_columns (
 );
 
 CREATE TABLE player_custom_values (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     player_id INTEGER REFERENCES players (id),
     column_id INTEGER REFERENCES player_custom_columns (id),
     value TEXT,
@@ -96,7 +96,7 @@ CREATE TABLE player_custom_values (
 );
 
 CREATE TABLE match_custom_columns (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     name varchar(255) NOT NULL,
     field_type VARCHAR(50) NOT NULL,
     description TEXT,
@@ -109,7 +109,7 @@ CREATE TABLE match_custom_columns (
 );
 
 CREATE TABLE match_custom_values (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     match_id INTEGER REFERENCES matches (id),
     column_id INTEGER REFERENCES match_custom_columns (id),
     value TEXT,
