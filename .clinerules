@@ -1,0 +1,19 @@
+# Type Mismatch Errors Prevention
+
+## Error Summary:
+- The compiler error occurred when trying to use pgtype.Int4 struct where int32 was expected
+- This happened in the db.CreateMatchParams initialization and API response mapping
+- The error message was: "cannot use pgtype.Int4{...} as int32 value in struct literal"
+
+## Best Practices:
+- Always verify the expected types in struct definitions before assignment
+- When working with database models, check if fields are primitive types or custom types
+- For pgtype fields, use the .Int32 field to extract the underlying value when needed
+- Maintain consistency between database model types and API response types
+- When modifying auto-generated files, consider the impact on dependent code
+
+## Prevention Checklist:
+- [ ] Verify struct field types before assignment
+- [ ] Check for type mismatches between database models and API contracts
+- [ ] Test type conversions thoroughly
+- [ ] Document any necessary type conversions

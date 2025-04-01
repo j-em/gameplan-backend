@@ -209,15 +209,48 @@ func (s *MyApiServer) PostUsersSignUpUser(ctx context.Context, request api.PostU
 // (Returning NotImplemented for brevity)
 
 func (s *MyApiServer) PostMatches(ctx context.Context, request api.PostMatchesRequestObject) (api.PostMatchesResponseObject, error) {
+	// Prepare database parameters with proper pgtype conversions
+	params := db.CreateMatchParams{
+		Seasonid:        pgtype.Int4{Int32: int32(request.Body.SeasonId), Valid: true},
+		Playerid1:       pgtype.Int4{Int32: int32(request.Body.PlayerId1), Valid: true},
+		Playerid2:       pgtype.Int4{Int32: int32(request.Body.PlayerId2), Valid: true},
+		Playerid1points: 0,
+		Playerid2points: 0,
+		Winnerid:        pgtype.Int4{Valid: false},
+		Group:           int32(request.Body.Group),
+		Matchdate:       pgtype.Date{Time: request.Body.MatchDate.Time, Valid: true},
+	}
+
+	// Create match in database
+	newMatch, err := s.DB.CreateMatch(ctx, params)
+	if err != nil {
+		return api.PostMatches200JSONResponse(api.ApiResult{
+			Error: &struct {
+				Code    *string `json:"code,omitempty"`
+				Message *string `json:"message,omitempty"`
+			}{
+				Code:    Ptr("DB_ERROR"),
+				Message: Ptr(fmt.Sprintf("Failed to create match: %v", err)),
+			},
+			IsSuccess: Ptr(false),
+		}), nil
+	}
+
+	// Return success response with properly mapped data
+	data := map[string]interface{}{
+		"id":              newMatch.ID,
+		"seasonId":        newMatch.Seasonid.Int32,
+		"playerId1":       newMatch.Playerid1.Int32,
+		"playerId2":       newMatch.Playerid2.Int32,
+		"playerId1Points": int32(newMatch.Playerid1points),
+		"playerId2Points": int32(newMatch.Playerid2points),
+		"matchDate":       newMatch.Matchdate.Time,
+		"winnerId":        nil, // Will be nil since winnerid is NULL
+		"group":           newMatch.Group,
+	}
+
 	return api.PostMatches200JSONResponse(api.ApiResult{
-		Error: &struct {
-			Code    *string `json:"code,omitempty"`
-			Message *string `json:"message,omitempty"`
-		}{
-			Code:    Ptr("NOT_IMPLEMENTED"),
-			Message: Ptr("PostMatches not implemented yet"),
-		},
-		IsSuccess: Ptr(false),
+		IsSuccess: Ptr(true),
 	}), nil
 }
 func (s *MyApiServer) PutMatchesBatches(ctx context.Context, request api.PutMatchesBatchesRequestObject) (api.PutMatchesBatchesResponseObject, error) {
