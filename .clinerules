@@ -1,41 +1,20 @@
-# Type Mismatch Errors Prevention
+# Key Technical Guidelines
 
-## Error Summary:
-- The compiler error occurred when trying to use pgtype.Int4 struct where int32 was expected
-- This happened in the db.CreateMatchParams initialization and API response mapping
-- The error message was: "cannot use pgtype.Int4{...} as int32 value in struct literal"
+## Type Safety
+- Verify types before assignment (pgtype.Int4 vs int32)
+- Maintain consistency between DB and API types
+- Document all type conversions
 
-## Best Practices:
-- Always verify the expected types in struct definitions before assignment
-- When working with database models, check if fields are primitive types or custom types
-- For pgtype fields, use the .Int32 field to extract the underlying value when needed
-- Maintain consistency between database model types and API response types
-- When modifying auto-generated files, consider the impact on dependent code
+## Batch Operations
+- Match field names exactly (case-sensitive)
+- Handle nullable fields properly
+- Validate before field access
+- Implement robust error handling
+- Check for missing fields
 
-## Prevention Checklist:
-- [ ] Verify struct field types before assignment
-- [ ] Check for type mismatches between database models and API contracts
-- [ ] Test type conversions thoroughly
-- [ ] Document any necessary type conversions
-
-# Batch Update Implementation Challenges
-
-## Error Summary:
-- Field naming inconsistencies between API and DB models (Winnerid vs WinnerId)
-- Missing expected fields in DbMatch struct
-- Null pointer dereferencing risks
-- Type conversion between API and database models
-
-## Best Practices:
-- Verify struct field definitions before accessing
-- Match database field names exactly (case-sensitive)
-- Use pgtype wrappers for nullable fields
-- Validate pointer fields before dereferencing
-- Implement proper error handling for batch operations
-
-## Prevention Checklist:
-- [ ] Verify all struct field names match exactly
-- [ ] Check for missing fields in API contracts
-- [ ] Handle nullable fields with pgtype conversion
-- [ ] Validate pointer fields before access
-- [ ] Implement batch operation error handling
+## Checklists
+- [ ] Type verification
+- [ ] Null safety checks
+- [ ] Field name matching
+- [ ] Error handling
+- [ ] Documentation
