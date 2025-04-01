@@ -190,3 +190,18 @@ WHERE id = $1;
 
 -- name: DeleteUser :exec
 UPDATE users SET isActive = false, updatedAt = CURRENT_TIMESTAMP WHERE id = $1;
+
+-- name: UpdateMatchesBatch :exec
+UPDATE matches
+SET seasonId = m.seasonId,
+    playerId1 = m.playerId1,
+    playerId1Points = m.playerId1Points,
+    playerId2 = m.playerId2,
+    playerId2Points = m.playerId2Points,
+    matchDate = m.matchDate,
+    winnerId = m.winnerId,
+    "group" = m."group",
+    isActive = m.isActive,
+    updatedAt = CURRENT_TIMESTAMP
+FROM (SELECT * FROM UNNEST ($1::matches[])) AS m
+WHERE matches.id = m.id;

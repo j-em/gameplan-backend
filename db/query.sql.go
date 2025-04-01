@@ -741,6 +741,27 @@ func (q *Queries) UpdateMatch(ctx context.Context, arg UpdateMatchParams) (Match
 	return i, err
 }
 
+const updateMatchesBatch = `-- name: UpdateMatchesBatch :exec
+UPDATE matches
+SET seasonId = m.seasonId,
+    playerId1 = m.playerId1,
+    playerId1Points = m.playerId1Points,
+    playerId2 = m.playerId2,
+    playerId2Points = m.playerId2Points,
+    matchDate = m.matchDate,
+    winnerId = m.winnerId,
+    "group" = m."group",
+    isActive = m.isActive,
+    updatedAt = CURRENT_TIMESTAMP
+FROM (SELECT unnest FROM UNNEST ($1::matches[])) AS m
+WHERE matches.id = m.id
+`
+
+func (q *Queries) UpdateMatchesBatch(ctx context.Context, dollar_1 []interface{}) error {
+	_, err := q.db.Exec(ctx, updateMatchesBatch, dollar_1)
+	return err
+}
+
 const updatePlayer = `-- name: UpdatePlayer :one
 UPDATE players
 SET name = $1,

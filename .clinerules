@@ -17,3 +17,25 @@
 - [ ] Check for type mismatches between database models and API contracts
 - [ ] Test type conversions thoroughly
 - [ ] Document any necessary type conversions
+
+# Batch Update Implementation Challenges
+
+## Error Summary:
+- Field naming inconsistencies between API and DB models (Winnerid vs WinnerId)
+- Missing expected fields in DbMatch struct
+- Null pointer dereferencing risks
+- Type conversion between API and database models
+
+## Best Practices:
+- Verify struct field definitions before accessing
+- Match database field names exactly (case-sensitive)
+- Use pgtype wrappers for nullable fields
+- Validate pointer fields before dereferencing
+- Implement proper error handling for batch operations
+
+## Prevention Checklist:
+- [ ] Verify all struct field names match exactly
+- [ ] Check for missing fields in API contracts
+- [ ] Handle nullable fields with pgtype conversion
+- [ ] Validate pointer fields before access
+- [ ] Implement batch operation error handling
