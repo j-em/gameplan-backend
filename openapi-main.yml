@@ -20,351 +20,7 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
-    ApiResult:
-      type: object
-      properties:
-        isSuccess:
-          type: boolean
-        data:
-          type: object
-          nullable: true
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            code:
-              type: string
-          nullable: true
-
-    DbMatch:
-      type: object
-      properties:
-        id:
-          type: integer
-        seasonId:
-          type: integer
-        playerId1:
-          type: integer
-        playerId2:
-          type: integer
-        playerId1Points:
-          type: integer
-        playerId2Points:
-          type: integer
-        matchDate:
-          type: string
-          format: date
-        group:
-          type: integer
-
-    DbMatchCustomColumn:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-
-    DbMatchCustomValue:
-      type: object
-      properties:
-        id:
-          type: integer
-        matchId:
-          type: integer
-        columnId:
-          type: integer
-        value:
-          type: string
-
-    AddMatchParams:
-      type: object
-      properties:
-        seasonId:
-          type: integer
-        playerId1:
-          type: integer
-        playerId2:
-          type: integer
-        matchDate:
-          type: string
-          format: date
-        group:
-          type: integer
-      required:
-        - seasonId
-        - playerId1
-        - playerId2
-        - matchDate
-        - group
-
-    SaveMatchDataParams:
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: object
-      required:
-        - matchId
-        - key
-        - value
-
-    UnassignPlayerFromMatchParams:
-      type: object
-      properties:
-        playerId:
-          type: integer
-        matchId:
-          type: integer
-      required:
-        - playerId
-        - matchId
-
-    CreatePoolPlayerParams:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-          nullable: true
-        emailNotificationsEnabled:
-          type: boolean
-      required:
-        - name
-        - emailNotificationsEnabled
-
-    CreatePlayerCustomColumnParams:
-      type: object
-      properties:
-        name:
-          type: string
-        fieldType:
-          type: string
-          enum:
-            - text
-            - number
-            - date
-            - boolean
-            - select
-        description:
-          type: string
-          nullable: true
-        isRequired:
-          type: boolean
-          nullable: true
-        displayOrder:
-          type: integer
-          nullable: true
-      required:
-        - name
-        - fieldType
-
-    SavePlayerCustomValueParams:
-      type: object
-      properties:
-        playerId:
-          type: integer
-        columnId:
-          type: integer
-        value:
-          type: string
-      required:
-        - playerId
-        - columnId
-        - value
-
-    GetPlayersParams:
-      type: object
-      properties:
-        limit:
-          type: integer
-        offset:
-          type: integer
-      required:
-        - limit
-        - offset
-
-    SavePlayerDataParams:
-      type: object
-      properties:
-        playerId:
-          type: integer
-        key:
-          type: string
-        value:
-          type: object
-      required:
-        - playerId
-        - key
-        - value
-
-    CreateSeasonParams:
-      type: object
-      properties:
-        name:
-          type: string
-        startDate:
-          type: string
-          format: date
-        amountOfTables:
-          type: integer
-        seasonType:
-          type: string
-        players:
-          type: array
-          items:
-            type: integer
-      required:
-        - name
-        - startDate
-        - amountOfTables
-        - seasonType
-        - players
-
-    GetSeasonDetailsParams:
-      type: object
-      properties:
-        seasonId:
-          type: integer
-      required:
-        - seasonId
-
-    UpdateSeasonParams:
-      type: object
-      properties:
-        name:
-          type: string
-      required:
-        - seasonId
-        - name
-
-    SendSupportMessageParams:
-      type: object
-      properties:
-        content:
-          type: string
-        messageType:
-          type: string
-        from:
-          type: string
-      required:
-        - content
-        - messageType
-        - from
-
-    SignUpUserParams:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        password:
-          type: string
-        confirmPassword:
-          type: string
-        phone:
-          type: string
-          nullable: true
-        country:
-          type: string
-        lang:
-          type: string
-          enum:
-            - fr
-            - en
-        birthday:
-          type: string
-          format: date
-          nullable: true
-        acceptTerms:
-          type: boolean
-      required:
-        - name
-        - email
-        - password
-        - confirmPassword
-        - country
-        - lang
-        - acceptTerms
-
-    LoginUserParams:
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-      required:
-        - email
-        - password
-
-    SendResetPasswordLinkParams:
-      type: object
-      properties:
-        email:
-          type: string
-      required:
-        - email
-
-    ResetCurrentUserPasswordParams:
-      type: object
-      properties:
-        newPassword:
-          type: string
-        token:
-          type: string
-        newPasswordConfirm:
-          type: string
-      required:
-        - newPassword
-        - token
-        - newPasswordConfirm
-
-    SaveUserSettingsParams:
-      type: object
-      properties:
-        email:
-          type: string
-          nullable: true
-        phone:
-          type: string
-          nullable: true
-        name:
-          type: string
-          nullable: true
-        lang:
-          type: string
-          nullable: true
-        birthday:
-          type: string
-          format: date
-          nullable: true
-
-    UpdateUserPasswordParams:
-      type: object
-      properties:
-        token:
-          type: string
-        password:
-          type: string
-        passwordConfirmation:
-          type: string
-      required:
-        - token
-        - password
-        - passwordConfirmation
-
-    SaveAppSettingsParams:
-      type: object
-      properties:
-        settings:
-          type: object # Assuming AppSettings is a complex object
-      required:
-        - settings
+    $ref: './openapi-schemas.yml#/schemas'
 
 paths:
   /matches/batches:
@@ -377,14 +33,14 @@ paths:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/DbMatch"
+                $ref: "./openapi-schemas.yml#/schemas/DbMatch"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /matches:
     post:
@@ -394,14 +50,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AddMatchParams"
+              $ref: "./openapi-schemas.yml#/schemas/AddMatchParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /matches/{matchId}:
     parameters:
@@ -419,7 +75,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
     put:
       summary: Save match data
       requestBody:
@@ -427,14 +83,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SaveMatchDataParams"
+              $ref: "./openapi-schemas.yml#/schemas/SaveMatchDataParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /matches/unassignPlayerFromMatch:
     post:
@@ -444,14 +100,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UnassignPlayerFromMatchParams"
+              $ref: "./openapi-schemas.yml#/schemas/UnassignPlayerFromMatchParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /players:
     post:
@@ -461,14 +117,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreatePoolPlayerParams"
+              $ref: "./openapi-schemas.yml#/schemas/CreatePoolPlayerParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
     get:
       summary: Get a list of players
       parameters:
@@ -490,7 +146,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: array
@@ -498,7 +154,7 @@ paths:
                       type: object
                       properties:
                         player:
-                          $ref: "#/components/schemas/DbPlayer"
+                          $ref: "./openapi-schemas.yml#/schemas/DbPlayer"
                         customValues:
                           type: object
                           additionalProperties:
@@ -520,7 +176,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: array
@@ -528,7 +184,7 @@ paths:
                       type: object
                       properties:
                         match:
-                          $ref: "#/components/schemas/DbMatch"
+                          $ref: "./openapi-schemas.yml#/schemas/DbMatch"
                         season:
                           type: object
                           properties:
@@ -553,12 +209,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/DbPlayerCustomValue"
+                      $ref: "./openapi-schemas.yml#/schemas/DbPlayerCustomValue"
 
     put:
       summary: Save a player custom value
@@ -567,14 +223,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SavePlayerCustomValueParams"
+              $ref: "./openapi-schemas.yml#/schemas/SavePlayerCustomValueParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /players/{playerId}:
     put:
@@ -591,14 +247,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SavePlayerDataParams"
+              $ref: "./openapi-schemas.yml#/schemas/SavePlayerDataParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
     delete:
       summary: Delete a player
       parameters:
@@ -614,7 +270,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
     get:
       summary: Get a player by ID
       parameters:
@@ -630,13 +286,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
                     properties:
                       player:
-                        $ref: "#/components/schemas/DbPlayer"
+                        $ref: "./openapi-schemas.yml#/schemas/DbPlayer"
                       customValues:
                         type: object
                         additionalProperties:
@@ -651,7 +307,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: array
@@ -669,24 +325,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateSeasonParams"
+              $ref: "./openapi-schemas.yml#/schemas/CreateSeasonParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
                     properties:
                       season:
-                        $ref: "#/components/schemas/DbSeason"
+                        $ref: "./openapi-schemas.yml#/schemas/DbSeason"
                       matches:
                         type: array
                         items:
-                          $ref: "#/components/schemas/DbMatch"
+                          $ref: "./openapi-schemas.yml#/schemas/DbMatch"
 
   /seasons/{seasonId}/publicScheduleLink:
     get:
@@ -704,7 +360,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: string
@@ -725,7 +381,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
@@ -733,7 +389,7 @@ paths:
                       seasons:
                         type: array
                         items:
-                          $ref: "#/components/schemas/DbSeason"
+                          $ref: "./openapi-schemas.yml#/schemas/DbSeason"
   /seasons/{seasonId}:
     put:
       summary: Update a season metadata
@@ -749,14 +405,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateSeasonParams"
+              $ref: "./openapi-schemas.yml#/schemas/UpdateSeasonParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
     delete:
       summary: Delete a season
       parameters:
@@ -772,7 +428,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
     get:
       summary: Get season details
       parameters:
@@ -787,31 +443,31 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GetSeasonDetailsParams"
+              $ref: "./openapi-schemas.yml#/schemas/GetSeasonDetailsParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
                     properties:
                       season:
-                        $ref: "#/components/schemas/DbSeason"
+                        $ref: "./openapi-schemas.yml#/schemas/DbSeason"
                       players:
                         type: array
                         items:
-                          $ref: "#/components/schemas/DbPlayer"
+                          $ref: "./openapi-schemas.yml#/schemas/DbPlayer"
                       allMatches:
                         type: array
                         items:
                           type: object
                           properties:
                             match:
-                              $ref: "#/components/schemas/DbMatch"
+                              $ref: "./openapi-schemas.yml#/schemas/DbMatch"
                             player1Name:
                               type: string
                             player2Name:
@@ -833,7 +489,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
@@ -854,7 +510,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
@@ -870,14 +526,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendSupportMessageParams"
+              $ref: "./openapi-schemas.yml#/schemas/SendSupportMessageParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /users/{userId}/customPlayerColumns/{columnId}:
     delete:
@@ -901,7 +557,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
   /users/{userId}/customPlayerColumns:
     parameters:
       - in: path
@@ -918,12 +574,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/DbPlayerCustomColumn"
+                      $ref: "./openapi-schemas.yml#/schemas/DbPlayerCustomColumn"
     post:
       summary: Create a player custom column for the user
       requestBody:
@@ -931,14 +587,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreatePlayerCustomColumnParams"
+              $ref: "./openapi-schemas.yml#/schemas/CreatePlayerCustomColumnParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /users/sendVerificationEmail:
     post:
@@ -949,7 +605,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /users/verifyMagicLinkToken:
     post:
@@ -971,7 +627,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /users/signUpUser:
     post:
@@ -982,14 +638,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SignUpUserParams"
+              $ref: "./openapi-schemas.yml#/schemas/SignUpUserParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /sessions:
     post:
@@ -1000,14 +656,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoginUserParams"
+              $ref: "./openapi-schemas.yml#/schemas/LoginUserParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /users/sendResetPasswordLink:
     post:
@@ -1017,14 +673,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendResetPasswordLinkParams"
+              $ref: "./openapi-schemas.yml#/schemas/SendResetPasswordLinkParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /users/{userId}/resetCurrentUserPassword:
     parameters:
@@ -1041,14 +697,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ResetCurrentUserPasswordParams"
+              $ref: "./openapi-schemas.yml#/schemas/ResetCurrentUserPasswordParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /users/{userId}/usersettings:
     post:
@@ -1065,14 +721,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SaveUserSettingsParams"
+              $ref: "./openapi-schemas.yml#/schemas/SaveUserSettingsParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
     get:
       summary: Get user settings
       parameters:
@@ -1088,7 +744,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
@@ -1126,7 +782,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /users/updateUserPassword:
     post:
@@ -1136,14 +792,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateUserPasswordParams"
+              $ref: "./openapi-schemas.yml#/schemas/UpdateUserPasswordParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /users/{userId}/appsettings:
     parameters:
@@ -1160,14 +816,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SaveAppSettingsParams"
+              $ref: "./openapi-schemas.yml#/schemas/SaveAppSettingsParams"
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
     get:
       summary: Get app settings
       responses:
@@ -1176,7 +832,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object # Assuming AppSettings is a complex object
@@ -1197,7 +853,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
@@ -1224,7 +880,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /subscriptions/initUpdatePaymentMethod:
     post:
@@ -1235,7 +891,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
@@ -1259,7 +915,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
 
   /subscriptions/upgradeUserSubscription:
     post:
@@ -1270,7 +926,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResult"
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object

@@ -1,0 +1,346 @@
+schemas:
+  ApiResult:
+    type: object
+    properties:
+      isSuccess:
+        type: boolean
+      data:
+        type: object
+        nullable: true
+      error:
+        type: object
+        properties:
+          message:
+            type: string
+          code:
+            type: string
+        nullable: true
+
+  DbMatch:
+    type: object
+    properties:
+      id:
+        type: integer
+      seasonId:
+        type: integer
+      playerId1:
+        type: integer
+      playerId2:
+        type: integer
+      playerId1Points:
+        type: integer
+      playerId2Points:
+        type: integer
+      matchDate:
+        type: string
+        format: date
+      group:
+        type: integer
+
+  DbMatchCustomColumn:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+
+  DbMatchCustomValue:
+    type: object
+    properties:
+      id:
+        type: integer
+      matchId:
+        type: integer
+      columnId:
+        type: integer
+      value:
+        type: string
+
+  AddMatchParams:
+    type: object
+    properties:
+      seasonId:
+        type: integer
+      playerId1:
+        type: integer
+      playerId2:
+        type: integer
+      matchDate:
+        type: string
+        format: date
+      group:
+        type: integer
+    required:
+      - seasonId
+      - playerId1
+      - playerId2
+      - matchDate
+      - group
+
+  SaveMatchDataParams:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: object
+    required:
+      - matchId
+      - key
+      - value
+
+  UnassignPlayerFromMatchParams:
+    type: object
+    properties:
+      playerId:
+        type: integer
+      matchId:
+        type: integer
+    required:
+      - playerId
+      - matchId
+
+  CreatePoolPlayerParams:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+        nullable: true
+      emailNotificationsEnabled:
+        type: boolean
+    required:
+      - name
+      - emailNotificationsEnabled
+
+  CreatePlayerCustomColumnParams:
+    type: object
+    properties:
+      name:
+        type: string
+      fieldType:
+        type: string
+        enum:
+          - text
+          - number
+          - date
+          - boolean
+          - select
+      description:
+        type: string
+        nullable: true
+      isRequired:
+        type: boolean
+        nullable: true
+      displayOrder:
+        type: integer
+        nullable: true
+    required:
+      - name
+      - fieldType
+
+  SavePlayerCustomValueParams:
+    type: object
+    properties:
+      playerId:
+        type: integer
+      columnId:
+        type: integer
+      value:
+        type: string
+    required:
+      - playerId
+      - columnId
+      - value
+
+  GetPlayersParams:
+    type: object
+    properties:
+      limit:
+        type: integer
+      offset:
+        type: integer
+    required:
+      - limit
+      - offset
+
+  SavePlayerDataParams:
+    type: object
+    properties:
+      playerId:
+        type: integer
+      key:
+        type: string
+      value:
+        type: object
+    required:
+      - playerId
+      - key
+      - value
+
+  CreateSeasonParams:
+    type: object
+    properties:
+      name:
+        type: string
+      startDate:
+        type: string
+        format: date
+      amountOfTables:
+        type: integer
+      seasonType:
+        type: string
+      players:
+        type: array
+        items:
+          type: integer
+    required:
+      - name
+      - startDate
+      - amountOfTables
+      - seasonType
+      - players
+
+  GetSeasonDetailsParams:
+    type: object
+    properties:
+      seasonId:
+        type: integer
+    required:
+      - seasonId
+
+  UpdateSeasonParams:
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+      - seasonId
+      - name
+
+  SendSupportMessageParams:
+    type: object
+    properties:
+      content:
+        type: string
+      messageType:
+        type: string
+      from:
+        type: string
+    required:
+      - content
+      - messageType
+      - from
+
+  SignUpUserParams:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      confirmPassword:
+        type: string
+      phone:
+        type: string
+        nullable: true
+      country:
+        type: string
+      lang:
+        type: string
+        enum:
+          - fr
+          - en
+      birthday:
+        type: string
+        format: date
+        nullable: true
+      acceptTerms:
+        type: boolean
+    required:
+      - name
+      - email
+      - password
+      - confirmPassword
+      - country
+      - lang
+      - acceptTerms
+
+  LoginUserParams:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - email
+      - password
+
+  SendResetPasswordLinkParams:
+    type: object
+    properties:
+      email:
+        type: string
+    required:
+      - email
+
+  ResetCurrentUserPasswordParams:
+    type: object
+    properties:
+      newPassword:
+        type: string
+      token:
+        type: string
+      newPasswordConfirm:
+        type: string
+    required:
+      - newPassword
+      - token
+      - newPasswordConfirm
+
+  SaveUserSettingsParams:
+    type: object
+    properties:
+      email:
+        type: string
+        nullable: true
+      phone:
+        type: string
+        nullable: true
+      name:
+        type: string
+        nullable: true
+      lang:
+        type: string
+        nullable: true
+      birthday:
+        type: string
+        format: date
+        nullable: true
+
+  UpdateUserPasswordParams:
+    type: object
+    properties:
+      token:
+        type: string
+      password:
+        type: string
+      passwordConfirmation:
+        type: string
+    required:
+      - token
+      - password
+      - passwordConfirmation
+
+  SaveAppSettingsParams:
+    type: object
+    properties:
+      settings:
+        type: object # Assuming AppSettings is a complex object
+    required:
+      - settings
