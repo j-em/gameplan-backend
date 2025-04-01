@@ -7,8 +7,10 @@ import (
 	"os"
 
 	"github.com/gameplan-backend/api"
+	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	echomiddleware "github.com/oapi-codegen/echo-middleware"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/passwords"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/sessions"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/stytchapi"
@@ -49,7 +51,6 @@ func AuthMiddleware(stytchClient *stytchapi.API) echo.MiddlewareFunc {
 	}
 }
 
-// PostSessions - Example implementation for login
 func (s *MyApiServer) PostSessions(ctx context.Context, request api.PostSessionsRequestObject) (api.PostSessionsResponseObject, error) {
 	params := request.Body
 
@@ -74,7 +75,7 @@ func (s *MyApiServer) PostSessions(ctx context.Context, request api.PostSessions
 		}), nil
 	}
 
-	responseData := map[string]interface{}{
+	responseData := map[string]any{
 		"message": "Login successful",
 		"token":   resp.SessionToken,
 	}
@@ -605,6 +606,18 @@ func main() {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+
+	// Load and validate OpenAPI spec
+	swagger, err := openapi3.NewLoader().LoadFromFile("openapi.yml")
+	if err != nil {
+		e.Logger.Fatal("Failed to load OpenAPI spec:", err)
+	}
+	if err := swagger.Validate(context.Background()); err != nil {
+		e.Logger.Fatal("OpenAPI spec validation failed:", err)
+	}
+
+	// Add OpenAPI validator middleware
+	e.Use(echomiddleware.OapiRequestValidator(swagger))
 
 	// Initialize Stytch client
 	stytchProjectID := os.Getenv("STYTCH_PROJECT_ID")
