@@ -1,0 +1,227 @@
+openapi: 3.0.0
+info:
+  title: Gameplan Seasons API
+  version: 1.0.0
+  description: OpenAPI specification for Gameplan seasons endpoints.
+
+paths:
+  /seasons:
+    get:
+      summary: Get all seasons (light version)
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+    post:
+      summary: Create a season with matches
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./openapi-schemas.yml#/schemas/CreateSeasonParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      season:
+                        $ref: "./openapi-schemas.yml#/schemas/DbSeason"
+                      matches:
+                        type: array
+                        items:
+                          $ref: "./openapi-schemas.yml#/schemas/DbMatch"
+
+  /seasons/{seasonId}/publicScheduleLink:
+    get:
+      summary: Get the public schedule link for a season
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
+                properties:
+                  data:
+                    type: string
+
+  /seasons/{seasonId}/upcoming:
+    get:
+      summary: Get upcoming seasons for the user
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      seasons:
+                        type: array
+                        items:
+                          $ref: "./openapi-schemas.yml#/schemas/DbSeason"
+
+  /seasons/{seasonId}:
+    put:
+      summary: Update a season metadata
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./openapi-schemas.yml#/schemas/UpdateSeasonParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
+    delete:
+      summary: Delete a season
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season to delete
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
+    get:
+      summary: Get season details
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season to retrieve details for
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./openapi-schemas.yml#/schemas/GetSeasonDetailsParams"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      season:
+                        $ref: "./openapi-schemas.yml#/schemas/DbSeason"
+                      players:
+                        type: array
+                        items:
+                          $ref: "./openapi-schemas.yml#/schemas/DbPlayer"
+                      allMatches:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            match:
+                              $ref: "./openapi-schemas.yml#/schemas/DbMatch"
+                            player1Name:
+                              type: string
+                            player2Name:
+                              type: string
+
+  /seasons/{seasonId}/scoreboard:
+    get:
+      summary: Get the scoreboard for a season
+      parameters:
+        - in: path
+          name: seasonId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season to retrieve the scoreboard for
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      scoreboard:
+                        type: array
+                        items:
+                          type: object
+                      seasonName:
+                        type: string
+
+  /seasons/totalAmount:
+    get:
+      summary: Get the total number of seasons
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      totalSeasons:
+                        type: integer
