@@ -40,9 +40,9 @@ CREATE TABLE seasons (
     isActive boolean NOT NULL DEFAULT true,
     seasonType varchar(50) CHECK (
         seasonType IN (
-            "pool",
-            "bowling",
-            "other"
+            'pool',
+            'bowling',
+            'other'
         )
     ) NOT NULL,
     frequency varchar(50) CHECK (
