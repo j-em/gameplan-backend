@@ -13,6 +13,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echomiddleware "github.com/oapi-codegen/echo-middleware"
+	"github.com/stripe/stripe-go/v81/client"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/stytchapi"
 )
 
@@ -51,7 +52,14 @@ func main() {
 	}
 
 	// Create the API implementation
-	myApi := &api_server.MyApiServer{StytchClient: stytchClient}
+	stripeKey := os.Getenv("STRIPE_SECRET_KEY")
+	if stripeKey == "" {
+		panic("STRIPE_SECRET_KEY environment variable must be set")
+	}
+
+	stripeClient := client.New(stripeKey, nil)
+
+	myApi := &api_server.MyApiServer{StytchClient: stytchClient, StripeClient: stripeClient}
 
 	// Authentication middleware
 	e.Use(api.AuthMiddleware(stytchClient))

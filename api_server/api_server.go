@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/gameplan-backend/api"
+	"github.com/stripe/stripe-go/v81/client"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/passwords"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/stytchapi"
 )
@@ -12,6 +13,7 @@ import (
 // MyApiServer provides a concrete implementation of the generated StrictServerInterface.
 type MyApiServer struct {
 	StytchClient *stytchapi.API
+	StripeClient *client.API
 }
 
 func (s *MyApiServer) PostSessions(ctx context.Context, request api.PostSessionsRequestObject) (api.PostSessionsResponseObject, error) {

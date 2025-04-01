@@ -9,6 +9,7 @@ require (
 	github.com/labstack/echo/v4 v4.13.3
 	github.com/oapi-codegen/echo-middleware v1.0.2
 	github.com/oapi-codegen/runtime v1.1.1
+	github.com/stripe/stripe-go/v81 v81.4.0
 	github.com/stytchauth/stytch-go/v16 v16.12.0
 )
 
