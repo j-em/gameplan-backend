@@ -1,0 +1,1 @@
+openapi-generator generate -i openapi-main.yml -g typescript
