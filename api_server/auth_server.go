@@ -73,15 +73,40 @@ func (s *AuthServer) PostSupportMessages(ctx context.Context, request api.PostSu
 }
 
 func (s *AuthServer) DeleteUsersUserId(ctx context.Context, request api.DeleteUsersUserIdRequestObject) (api.DeleteUsersUserIdResponseObject, error) {
+	// Delete user subscription
+	err := s.DB.DeleteUserSubscription(ctx, int32(request.UserId))
+	if err != nil {
+		fmt.Printf("Failed to delete user subscription: %v\n", err)
+		return api.DeleteUsersUserId200JSONResponse(api.ApiResult{
+			Error: &struct {
+				Code    *string `json:"code,omitempty"`
+				Message *string `json:"message,omitempty"`
+			}{
+				Code:    Ptr("DATABASE_ERROR"),
+				Message: Ptr("Failed to delete user subscription"),
+			},
+			IsSuccess: Ptr(false),
+		}), nil
+	}
+
+	// Delete user
+	err = s.DB.DeleteUser(ctx, int32(request.UserId))
+	if err != nil {
+		fmt.Printf("Failed to delete user: %v\n", err)
+		return api.DeleteUsersUserId200JSONResponse(api.ApiResult{
+			Error: &struct {
+				Code    *string `json:"code,omitempty"`
+				Message *string `json:"message,omitempty"`
+			}{
+				Code:    Ptr("DATABASE_ERROR"),
+				Message: Ptr("Failed to delete user"),
+			},
+			IsSuccess: Ptr(false),
+		}), nil
+	}
+
 	return api.DeleteUsersUserId200JSONResponse(api.ApiResult{
-		Error: &struct {
-			Code    *string `json:"code,omitempty"`
-			Message *string `json:"message,omitempty"`
-		}{
-			Code:    Ptr("NOT_IMPLEMENTED"),
-			Message: Ptr("DeleteUsersUserId not implemented yet"),
-		},
-		IsSuccess: Ptr(false),
+		IsSuccess: Ptr(true),
 	}), nil
 }
 
