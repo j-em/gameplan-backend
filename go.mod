@@ -12,7 +12,6 @@ require (
 	github.com/oapi-codegen/echo-middleware v1.0.2
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/stripe/stripe-go/v78 v78.12.0
-	github.com/stytchauth/stytch-go v1.1.3
 	github.com/stytchauth/stytch-go/v16 v16.12.1
 )
 
