@@ -1,1 +1,1 @@
-openapi-generator generate -i openapi-main.yml -g typescript
+openapi-generator generate -i openapi-main.yml -g typescript -o ~/gameplan-api-ts -p npmName=gameplan-api-ts-client
