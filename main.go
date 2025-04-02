@@ -16,7 +16,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echomiddleware "github.com/oapi-codegen/echo-middleware"
-	"github.com/stripe/stripe-go/v78/client"
+	"github.com/stripe/stripe-go/v81/client"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/stytchapi"
 )
 

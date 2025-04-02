@@ -5,7 +5,7 @@ import (
 
 	"github.com/gameplan-backend/api"
 	"github.com/gameplan-backend/db"
-	"github.com/stripe/stripe-go/v78/client"
+	"github.com/stripe/stripe-go/v81/client"
 )
 
 type SubscriptionsServer struct {

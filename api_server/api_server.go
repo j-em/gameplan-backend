@@ -6,7 +6,7 @@ import (
 	"github.com/gameplan-backend/api"
 	"github.com/gameplan-backend/db"
 	"github.com/mailgun/mailgun-go/v4"
-	"github.com/stripe/stripe-go/v78/client"
+	"github.com/stripe/stripe-go/v81/client"
 	"github.com/stytchauth/stytch-go/v16/stytch/consumer/stytchapi"
 )
 
