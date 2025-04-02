@@ -19,8 +19,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-  schemas:
-    $ref: './openapi-schemas.yml#/schemas'
 
 paths:
   /matches/batches:
@@ -536,7 +534,6 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "./openapi-schemas.yml#/schemas/ApiResult"
                 properties:
                   data:
                     type: object
@@ -665,7 +662,7 @@ paths:
           required: true
           schema:
             type: integer
-          description: The ID of the user
+            description: The ID of the user
       responses:
         "200":
           description: Successful operation
