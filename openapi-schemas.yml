@@ -323,14 +323,6 @@ schemas:
       - seasonType
       - players
 
-  GetSeasonDetailsParams:
-    type: object
-    properties:
-      seasonId:
-        type: integer
-    required:
-      - seasonId
-
   UpdateSeasonParams:
     type: object
     properties:

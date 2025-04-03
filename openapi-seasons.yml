@@ -99,21 +99,15 @@ paths:
                           $ref: "./openapi-schemas.yml#/schemas/DbSeason"
 
   /seasons/{seasonId}:
+    parameters:
+      - in: path
+        name: seasonId
+        schema:
+          type: integer
+        required: true
+        description: The ID of the season we are working with
     put:
       summary: Update a season metadata
-      parameters:
-        - in: path
-          name: seasonId
-          schema:
-            type: integer
-          required: true
-          description: The ID of the season to update
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "./openapi-schemas.yml#/schemas/UpdateSeasonParams"
       responses:
         "200":
           description: Successful operation
@@ -123,35 +117,11 @@ paths:
                 type: object
     delete:
       summary: Delete a season
-      parameters:
-        - in: path
-          name: seasonId
-          schema:
-            type: integer
-          required: true
-          description: The ID of the season to delete
       responses:
         "200":
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: object
     get:
       summary: Get season details
-      parameters:
-        - in: path
-          name: seasonId
-          schema:
-            type: integer
-          required: true
-          description: The ID of the season to retrieve details for
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "./openapi-schemas.yml#/schemas/GetSeasonDetailsParams"
       responses:
         "200":
           description: Successful operation
@@ -180,6 +150,10 @@ paths:
                               type: string
                             player2Name:
                               type: string
+                    required:
+                      - season
+                      - players
+                      - allMatches
 
   /seasons/{seasonId}/scoreboard:
     get:
@@ -208,6 +182,8 @@ paths:
                           type: object
                       seasonName:
                         type: string
+                required:
+                  - data
 
   /seasons/totalAmount:
     get:
@@ -225,3 +201,5 @@ paths:
                     properties:
                       totalSeasons:
                         type: integer
+                required:
+                  - data
