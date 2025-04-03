@@ -199,7 +199,8 @@ schemas:
   SaveMatchDataParams:
     type: object
     properties:
-    // add matchId key, should be type integer ai!
+      matchId:
+        type: integer
       key:
         type: string
       value:
