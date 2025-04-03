@@ -344,3 +344,9 @@ schemas:
         type: object # Assuming AppSettings is a complex object
     required:
       - settings
+
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: string

@@ -297,17 +297,17 @@ paths:
                           type: string
 
   /seasons:
-    $ref: './openapi-seasons.yml#/paths/~1seasons'
+    $ref: "./openapi-seasons.yml#/paths/~1seasons"
   /seasons/{seasonId}/publicScheduleLink:
-    $ref: './openapi-seasons.yml#/paths/~1seasons~1{seasonId}~1publicScheduleLink'
+    $ref: "./openapi-seasons.yml#/paths/~1seasons~1{seasonId}~1publicScheduleLink"
   /seasons/{seasonId}/upcoming:
-    $ref: './openapi-seasons.yml#/paths/~1seasons~1{seasonId}~1upcoming'
+    $ref: "./openapi-seasons.yml#/paths/~1seasons~1{seasonId}~1upcoming"
   /seasons/{seasonId}:
-    $ref: './openapi-seasons.yml#/paths/~1seasons~1{seasonId}'
+    $ref: "./openapi-seasons.yml#/paths/~1seasons~1{seasonId}"
   /seasons/{seasonId}/scoreboard:
-    $ref: './openapi-seasons.yml#/paths/~1seasons~1{seasonId}~1scoreboard'
+    $ref: "./openapi-seasons.yml#/paths/~1seasons~1{seasonId}~1scoreboard"
   /seasons/totalAmount:
-    $ref: './openapi-seasons.yml#/paths/~1seasons~1totalAmount'
+    $ref: "./openapi-seasons.yml#/paths/~1seasons~1totalAmount"
   /support/messages:
     post:
       summary: Send a support message
@@ -554,6 +554,20 @@ paths:
                         format: date
                       tier:
                         type: string
+                    required:
+                      - email
+                      - phone
+                      - name
+                      - isVerified
+                      - lang
+                      - birthday
+                      - tier
+        "400":
+          description: Bad Request - Invalid ID format provided.
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi-schemas.yml#/schemas/ErrorResponse"
 
   /users/{userId}:
     delete:
