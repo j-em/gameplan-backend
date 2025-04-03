@@ -199,14 +199,11 @@ schemas:
   SaveMatchDataParams:
     type: object
     properties:
-      matchId:
-        type: integer
       key:
         type: string
       value:
         type: object
     required:
-      - matchId
       - key
       - value
 

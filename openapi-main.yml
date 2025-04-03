@@ -182,7 +182,7 @@ paths:
         schema:
           type: integer
         required: true
-        description: The ID of the player to retrieve custom values for
+        description: The ID of the player
     get:
       summary: Get player custom columns values for a player
       responses:
@@ -211,15 +211,15 @@ paths:
           description: Successful operation
 
   /players/{playerId}:
+    parameters:
+      - in: path
+        name: playerId
+        schema:
+          type: integer
+        required: true
+        description: The ID of the player
     put:
       summary: Save player data
-      parameters:
-        - in: path
-          name: playerId
-          schema:
-            type: integer
-          required: true
-          description: The ID of the player
       requestBody:
         required: true
         content:
@@ -231,25 +231,11 @@ paths:
           description: Successful operation
     delete:
       summary: Delete a player
-      parameters:
-        - in: path
-          name: playerId
-          schema:
-            type: integer
-          required: true
-          description: The ID of the player to delete
       responses:
         "200":
           description: Successful operation
     get:
       summary: Get a player by ID
-      parameters:
-        - in: path
-          name: playerId
-          schema:
-            type: integer
-          required: true
-          description: The ID of the player to retrieve
       responses:
         "200":
           description: Successful operation
@@ -433,15 +419,15 @@ paths:
           description: Successful operation
 
   /users/{userId}/usersettings:
+    parameters:
+      - in: path
+        name: userId
+        schema:
+          type: integer
+        required: true
+        description: The ID of the user
     post:
       summary: Save user settings
-      parameters:
-        - in: path
-          name: userId
-          schema:
-            type: integer
-          required: true
-          description: The ID of the user
       requestBody:
         required: true
         content:
@@ -453,13 +439,6 @@ paths:
           description: Successful operation
     get:
       summary: Get user settings
-      parameters:
-        - in: path
-          name: userId
-          schema:
-            type: integer
-          required: true
-          description: The ID of the user
       responses:
         "200":
           description: Successful operation
@@ -561,15 +540,15 @@ paths:
                     type: object # Assuming AppSettings is a complex object
 
   /users/{userId}/subscription:
+    parameters:
+      - in: path
+        name: userId
+        required: true
+        schema:
+          type: integer
+          description: The ID of the user
     get:
       summary: Get user subscription details
-      parameters:
-        - in: path
-          name: userId
-          required: true
-          schema:
-            type: integer
-            description: The ID of the user
       responses:
         "200":
           description: Successful operation
@@ -590,13 +569,6 @@ paths:
 
     delete:
       summary: Cancel user subscription
-      parameters:
-        - in: path
-          name: userId
-          required: true
-          schema:
-            type: integer
-            description: The ID of the user
       responses:
         "200":
           description: Successful operation
