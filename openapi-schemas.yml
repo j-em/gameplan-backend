@@ -141,6 +141,15 @@ schemas:
         format: date
       group:
         type: integer
+    required:
+      - id
+      - seasonId
+      - playerId1
+      - playerId2
+      - playerId1Points
+      - playerId2Points
+      - matchDate
+      - group
 
   DbMatchCustomColumn:
     type: object
@@ -149,6 +158,9 @@ schemas:
         type: integer
       name:
         type: string
+    required:
+      - id
+      - name
 
   DbMatchCustomValue:
     type: object
@@ -161,7 +173,11 @@ schemas:
         type: integer
       value:
         type: string
-
+    required:
+      - id
+      - matchId
+      - columnId
+      - value
   AddMatchParams:
     type: object
     properties:
@@ -174,18 +190,16 @@ schemas:
       matchDate:
         type: string
         format: date
-      group:
-        type: integer
     required:
       - seasonId
       - playerId1
       - playerId2
       - matchDate
-      - group
 
   SaveMatchDataParams:
     type: object
     properties:
+    // add matchId key, should be type integer ai!
       key:
         type: string
       value:
