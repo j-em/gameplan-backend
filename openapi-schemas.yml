@@ -1,21 +1,126 @@
 schemas:
-  ApiResult:
+  DbPlayer:
     type: object
     properties:
-      isSuccess:
+      id:
+        type: integer
+      userId:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      preferredMatchGroup:
+        type: integer
+        nullable: true
+      isActive:
         type: boolean
-      data:
-        type: object
-        nullable: true
-      error:
-        type: object
-        properties:
-          message:
-            type: string
-          code:
-            type: string
-        nullable: true
+      emailNotificationsEnabled:
+        type: boolean
+    required:
+      - id
+      - userId
+      - name
+      - email
+      - createdAt
+      - updatedAt
+      - preferredMatchGroup
+      - isActive
+      - emailNotificationsEnabled
 
+  DbPlayerCustomColumn:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      field_type:
+        type: string
+      description:
+        type: string
+      is_required:
+        type: boolean
+      is_active:
+        type: boolean
+      display_order:
+        type: integer
+    required:
+      - id
+      - name
+      - field_type
+      - description
+      - is_required
+      - is_active
+      - display_order
+
+  DbPlayerCustomValue:
+    type: object
+    properties:
+      id:
+        type: integer
+      playerId:
+        type: integer
+      columnId:
+        type: integer
+      value:
+        type: string
+    required:
+      - id
+      - playerId
+      - columnId
+      - value
+  DbSeason:
+    type: object
+    properties:
+      id:
+        type: integer
+      userId:
+        type: integer
+      name:
+        type: string
+      startDate:
+        type: string
+        format: date
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      isActive:
+        type: boolean
+      seasonType:
+        type: string
+        enum:
+          - pool
+          - bowling
+          - other
+      frequency:
+        type: string
+        enum:
+          - weekly
+          - biweekly
+          - monthly
+          - quarterly
+          - yearly
+    required:
+      - id
+      - userId
+      - name
+      - startDate
+      - createdAt
+      - updatedAt
+      - isActive
+      - seasonType
+      - frequency
+      - value
   DbMatch:
     type: object
     properties:
@@ -108,11 +213,11 @@ schemas:
         type: string
       email:
         type: string
-        nullable: true
       emailNotificationsEnabled:
         type: boolean
     required:
       - name
+      - email
       - emailNotificationsEnabled
 
   CreatePlayerCustomColumnParams:
@@ -130,16 +235,16 @@ schemas:
           - select
       description:
         type: string
-        nullable: true
       isRequired:
         type: boolean
-        nullable: true
       displayOrder:
         type: integer
-        nullable: true
     required:
       - name
       - fieldType
+      - description
+      - isRequired
+      - displayOrder
 
   SavePlayerCustomValueParams:
     type: object
