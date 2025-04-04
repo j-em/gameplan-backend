@@ -72,31 +72,6 @@ paths:
                   data:
                     type: string
 
-  /seasons/{seasonId}/upcoming:
-    get:
-      summary: Get upcoming seasons for the user
-      parameters:
-        - in: path
-          name: seasonId
-          schema:
-            type: integer
-          required: true
-          description: The ID of the season
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      seasons:
-                        type: array
-                        items:
-                          $ref: "./openapi-schemas.yml#/schemas/DbSeason"
 
   /seasons/{seasonId}:
     parameters:

@@ -258,8 +258,6 @@ paths:
     $ref: "./openapi-seasons.yml#/paths/~1seasons"
   /seasons/{seasonId}/publicScheduleLink:
     $ref: "./openapi-seasons.yml#/paths/~1seasons~1{seasonId}~1publicScheduleLink"
-  /seasons/{seasonId}/upcoming:
-    $ref: "./openapi-seasons.yml#/paths/~1seasons~1{seasonId}~1upcoming"
   /seasons/{seasonId}:
     $ref: "./openapi-seasons.yml#/paths/~1seasons~1{seasonId}"
   /seasons/{seasonId}/scoreboard:
@@ -493,6 +491,32 @@ paths:
       responses:
         "200":
           description: Successful operation
+
+  /users/{userId}/upcomingSeasons:
+    get:
+      summary: Get upcoming seasons for the user
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the season
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      seasons:
+                        type: array
+                        items:
+                          $ref: "./openapi-schemas.yml#/schemas/DbSeason"
 
   /users/updateUserPassword:
     post:
