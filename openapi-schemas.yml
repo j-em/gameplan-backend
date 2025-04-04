@@ -459,3 +459,9 @@ schemas:
     properties:
       code:
         type: string
+
+  Tier:
+    type: string
+    enum:
+      - free
+      - pro

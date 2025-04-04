@@ -462,7 +462,7 @@ paths:
                         type: string
                         format: date
                       tier:
-                        type: string
+                        $ref: "./openapi-schemas.yml#/schemas/Tier"
                     required:
                       - email
                       - phone
