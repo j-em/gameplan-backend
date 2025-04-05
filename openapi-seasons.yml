@@ -25,6 +25,8 @@ paths:
                           type: integer
                         name:
                           type: string
+                required:
+                  - data
     post:
       summary: Create a season with matches
       requestBody:
@@ -50,6 +52,8 @@ paths:
                         type: array
                         items:
                           $ref: "./openapi-schemas.yml#/schemas/DbMatch"
+                required:
+                  - data
 
   /seasons/{seasonId}/publicScheduleLink:
     get:
@@ -71,6 +75,8 @@ paths:
                 properties:
                   data:
                     type: string
+                required:
+                  - data
 
 
   /seasons/{seasonId}:
@@ -90,6 +96,8 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - data
     delete:
       summary: Delete a season
       responses:
@@ -129,6 +137,8 @@ paths:
                       - season
                       - players
                       - allMatches
+                required:
+                  - data
 
   /seasons/{seasonId}/scoreboard:
     get:
@@ -157,6 +167,8 @@ paths:
                           type: object
                       seasonName:
                         type: string
+                required:
+                  - data
                 required:
                   - data
 
