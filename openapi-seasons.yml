@@ -78,7 +78,6 @@ paths:
                 required:
                   - data
 
-
   /seasons/{seasonId}:
     parameters:
       - in: path
@@ -167,8 +166,6 @@ paths:
                           type: object
                       seasonName:
                         type: string
-                required:
-                  - data
                 required:
                   - data
 
