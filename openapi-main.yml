@@ -176,6 +176,8 @@ paths:
                               type: integer
                             name:
                               type: string
+                required:
+                  - data
 
   /players/{playerId}/customColumns:
     parameters:
@@ -199,6 +201,8 @@ paths:
                     type: array
                     items:
                       $ref: "./openapi-schemas.yml#/schemas/DbPlayerCustomValue"
+                required:
+                  - data
 
     put:
       summary: Save a player custom value
@@ -255,6 +259,8 @@ paths:
                         type: object
                         additionalProperties:
                           type: string
+                required:
+                  - data
 
   /seasons:
     $ref: "./openapi-seasons.yml#/paths/~1seasons"
@@ -320,6 +326,8 @@ paths:
                     type: array
                     items:
                       $ref: "./openapi-schemas.yml#/schemas/DbPlayerCustomColumn"
+                required:
+                  - data
     post:
       summary: Create a player custom column for the user
       requestBody:
@@ -473,6 +481,8 @@ paths:
                       - lang
                       - birthday
                       - tier
+                required:
+                  - data
         "400":
           description: Bad Request - Invalid ID format provided.
           content:
@@ -519,6 +529,8 @@ paths:
                         type: array
                         items:
                           $ref: "./openapi-schemas.yml#/schemas/DbSeason"
+                required:
+                  - data
 
   /users/updateUserPassword:
     post:
@@ -564,6 +576,8 @@ paths:
                 properties:
                   data:
                     type: object # Assuming AppSettings is a complex object
+                required:
+                  - data
 
   /users/{userId}/subscription:
     parameters:
@@ -592,6 +606,8 @@ paths:
                         type: boolean
                       features:
                         type: object
+                required:
+                  - data
 
     delete:
       summary: Cancel user subscription
