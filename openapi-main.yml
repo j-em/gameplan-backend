@@ -141,6 +141,8 @@ paths:
                           type: object
                           additionalProperties:
                             type: string
+                required:
+                  - data
 
   /players/{playerId}/schedule:
     get:
